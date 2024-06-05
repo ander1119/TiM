@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Project</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        .nav-bar {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .nav-bar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .block {
+            padding: 50px;
+            text-align: center;
+        }
+        #block1 {
+            background-image: url('your-trope-image.jpg');
+            color: white;
+            height: 500px;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #block1 > div {
+            display: flex;
+            width: 100%;
+            /* background: rgba(0, 0, 0, 0.5); */
+            /* padding: 20px;
+            width: 100%;    Full width */
+            justify-content: space-around; /* Distributes space evenly between columns */
+        }
+        #block2, #block3, #block4 {
+            background: #f4f4f4;
+        }
+
+        .column {
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+            padding: 20px;
+            width: 45%;    /* Each column takes up roughly one-third of the space */
+            box-sizing: border-box; /* Includes padding in the width */
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="#block1">Challenges</a>
+        <a href="#block2">Figure 1</a>
+        <a href="#block3">Download</a>
+        <a href="#block4">Authors</a>
+    </div>
+    <div id="block1" class="block">
+        <div>
+            <div class="column">
+                <h2>Abstract Perception</h2>
+                <p>Description of Challenge 1</p>
+            </div>
+            <div class="column">
+                <h2>Long-range Compositional Reasoning</h2>
+                <p>Description of Challenge 2</p>
+            </div>
+        </div>
+    </div>    
+    <div id="block2" class="block">
+        <h2>Figure 1</h2>
+        <img src="path-to-your-figure1.jpg" alt="Figure 1">
+    </div>
+    <div id="block3" class="block">
+        <h2>Download</h2>
+        <p>Instructions on how to download the dataset</p>
+        <a href="download-link">Download Here</a>
+    </div>
+    <div id="block4" class="block">
+        <h2>Authors</h2>
+        <p>Information about the authors</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiM</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        a {
+            color: rgb(18, 142, 209);         /* Text color */
+            text-decoration: none; /* Removes underline */
+        }
+        a:hover {
+            color: red;           /* Text color on hover */
+        }
+        a:active {
+            color: yellow;        /* Text color when clicked */
+        }
+
+        .nav-bar {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-title {
+            margin-left: 40px;
+            font-size: 24px;
+        }
+        .nav-links a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: right;
+        }
+        .nav-links {
+            margin-right: 40px;
+        }
+        .block {
+            padding: 50px;
+            text-align: center;
+        }
+        #block1 {
+            background-image: url('images/theater.png');
+            color: white;
+            height: 1000px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 200px;
+        }
+        #block1 > div {
+            display: flex;
+            width: 100%;
+            background: rgba(0, 0, 0, 1);
+            justify-content: space-around;
+        }
+        .column {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            width: 35%;
+            box-sizing: border-box;
+        }
+        .column h2 {
+            font-size: 30px;
+        }
+        #block2, #block3, #block4 {
+            background: rgba(0, 0, 0, 0);
+            padding-left: 150px;
+            text-align: left;
+        }
+
+        #block5 {
+            background-color: #333;
+            padding-left: 150px;
+            color: white;
+            text-align: left;
+        }
+
+        #block3 {
+            line-height: 1.6;
+        }
+        /* Style for first-level list items within #block3 */
+        #block3 ol > li {
+            font-size: 24px; /* Larger font size for first-level items */
+            color: #333; /* Dark text for better readability */
+        }
+        /* Style for second-level list items within #block3 */
+        #block3 ol > li > ul > li {
+            font-size: 20px; /* Smaller font size for second-level items */
+            color: #666; /* Slightly lighter color */
+        }
+        .overview-content, .download-content, .author-content {
+            display: flex;
+        }
+        #block3 blockquote {
+            background-color: #f5efef; /* Light gray background */
+            padding: 20px; /* Adds space inside the blockquote */
+            border-left: 5px solid #ccc; /* Adds a left border to the blockquote */
+            margin: 20px; /* Adds space outside the blockquote */
+            font-family: Arial, sans-serif; /* Sets the font of the text within the blockquote */
+            font-size: 16px; /* Sets the size of the text */
+            line-height: 1.6; /* Increases the line spacing */
+            max-width: 80%;
+        }
+
+        .overview-section {
+            flex: 1;
+            /* padding: 40px; */
+            max-width: 40%;
+        }
+        .download-section .author-section .repo-section {
+            flex: 1;
+            /* padding: 40px; */
+            padding: 40px;
+        }
+
+        .author-section {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: left;
+            /* display: flex; */
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .overview-section h2, .download-section h2, .author-section h2, .repo-section h2 {
+            flex: 1;
+            font-size: 48px;
+        }
+        .overview-section p, .download-section p, .author-section p, .repo-section p, .download-section ol {
+            font-size: 20px;
+        }
+        .image-section {
+            padding-top: 70px;
+            max-width: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-section img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-title">Trope in Movies</div>
+        <div class="nav-links">
+            <a href="#block1">Overview</a>
+            <a href="#block2">Downloads</a>
+            <a href="#block3">Github</a>
+            <a href="#block4">Contact Us</a>
+        </div>
+    </div>
+    <div id="block1" class="block">
+        <div>
+            <div class="column">
+                <h2>Abstract Perception</h2>
+                <p>understanding and tokenizing abstract concepts in videos</p>
+            </div>
+            <div class="column">
+                <h2>Long-range Compositional Reasoning</h2>
+                <p>planning and integrating intermediate reasoning steps for managing long-range videos with numerous input</p>
+            </div>
+        </div>
+    </div>    
+    <div id="block2" class="block">
+        <div class="overview-content">
+            <div class="overview-section">
+                <h2>Overview</h2>
+                <p>Trope in Movies (TiM) comprises (1) 684 movies, each annotated with per-shot keyframes, subtitles, and trope labels, and (2) 95 trope identification queries accompanied by their definitions.</p>
+                <p>TiM is designed as a testbed for exploring two critical yet previously overlooked video reasoning skills: (1) Abstract Perception: understanding and tokenizing abstract concepts in videos, and (2) Long-range Compositional Reasoning: planning and integrating intermediate reasoning steps for managing long-range videos with numerous input.</p>
+            </div>
+            <div class="image-section">
+                <img src="images/tim.png" alt="Comparison of challenges between TiM and existing datasets">
+            </div>
+        </div>
+    </div>
+    <div id="block3" class="block">
+        <div class="download-content">
+            <div class="download-section">
+                <h2>Download</h2>
+                <ol>
+                    <li>
+                        <strong>Annotation of QA</strong>
+                        <ul>
+                            <li>It contains three JSON files, corresponding to three experiment setups
+                                <ul>
+                                    <li><a href="https://drive.google.com/file/d/1A-nyPbPLa_o7Edkhj7nf1_vu_6J96j2R/view?usp=sharing"><code>tim_fullset.json</code></a></li>
+                                    <li><a href="https://drive.google.com/file/d/1gktosdX6Y3PBMvdLthw_q2P7EknmQs8K/view?usp=sharing"><code>tim_vdset.json</code></a></li>
+                                    <li><a href="https://drive.google.com/file/d/1IxGS99nPJri2YYYIfEdloUekYsKhh8k7/view?usp=sharing"><code>tim_mainset.json</code></a></li>
+                                </ul>
+                            <li>Each JSON file can be loaded as a JSON object, the format is shown as follows:
+                                <blockquote>
+                                    <pre><code>[
+    {
+        "video": "tt1637725",          # IMDB ID
+        "num_option": 2,
+        "a0": "yes",
+        "a1": "no",
+        "trope": "Big Bad",            # Trope name
+        "category": "Character Trait", # Trope category
+        "qid": "tt1637725_0",          # {IMDB ID}_{Trope ID}
+        "answer": 1,
+        "question": "Is the trope '{Trope name}', which means '{Trope definition}', relevant to the movie?"
+    }
+]</code></pre>
+                                </blockquote>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>MovieNet per-shot Keyframes</strong>
+                        <ul>
+                            <li>From our link
+                                <ul>
+                                    <li><a href="https://drive.google.com/file/d/1UDK59NJ5dvi-loD3AV_sPBDxoIEC4YBP/view?usp=sharing">Fullset</a></li>
+                                    <li><a href="https://drive.google.com/file/d/1tc5BJApEdseklCLjlZc4W2cCqSwDZu8z/view?usp=sharing">VDset</a></li>
+                                    <li><a href="https://drive.google.com/file/d/1nAiELTfU1XXgK-e7b-lXD5T8cCdIhMo4/view?usp=sharing">Mainset</a></li>
+                                </ul>
+                            </li>
+                            <li>From MovieNet official site: <a href="https://movienet.github.io/">Visit MovieNet</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Preprocessed Subtitles</strong>
+                        <ul>
+                            <li><a href="https://drive.google.com/file/d/1XLsw2vQoOHegR_9rrV0q8CFLNVOlcrCL/view?usp=sharing"><code>subtitles.zip</code></a> contains 246 JSON files, each corresponding to subtitles in a movie in TiM</li>
+                            <li>Each JSON file can be loaded as a JSON object, the format is shown as follows. 
+                            <li>Note that the key if corresponding to image filename under <strong>MovieNet per-shot Keyframes</strong></li>
+                                <blockquote>
+                                    <pre><code>{
+    "shot_{shot_idx}_img_{img_idx}": {
+        "bboxes": [], # deprecated
+        "subtitles": [
+            subtitle1,
+            subtitle2,
+            ...
+        ] # subtitles within the shot
+    } 
+}</code></pre>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div id="block4" class="block">
+        <div class="overview-content">
+            <div class="repo-section">
+                <h2>Github</h2>
+                <p>We provide some useful script to pre-process, access and manage the TiM dataset in our <a href="https://github.com/ander1119/TiM">repository</a></p>
+            </div>
+        </div>
+    </div>
+    <div id="block5" class="block">
+        <div class="overview-content">
+            <div class="author-section">
+                <h2>Contact Us</h2>
+                <p>Hung-Ting Su: htsu@cmlab.csie.ntu.edu.tw</p>
+                <p>Chun-Tong Chao: adnchao@cmlab.csie.ntu.edu.tw</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

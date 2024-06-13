@@ -4,244 +4,673 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TiM</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-        a {
-            color: rgb(18, 142, 209);         /* Text color */
-            text-decoration: none; /* Removes underline */
-        }
-        a:hover {
-            color: red;           /* Text color on hover */
-        }
-        a:active {
-            color: yellow;        /* Text color when clicked */
-        }
-
-        .nav-bar {
-            background-color: #333;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-title {
-            margin-left: 40px;
-            font-size: 24px;
-        }
-        .nav-links a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: right;
-        }
-        .nav-links {
-            margin-right: 40px;
-        }
-        .block {
-            padding: 50px;
-            text-align: center;
-        }
-        #block1 {
-            background-image: url('images/theater.png');
-            color: white;
-            height: 1000px;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 200px;
-        }
-        #block1 > div {
-            display: flex;
-            width: 100%;
-            background: rgba(0, 0, 0, 1);
-            justify-content: space-around;
-        }
-        .column {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            width: 35%;
-            box-sizing: border-box;
-        }
-        .column h2 {
-            font-size: 30px;
-        }
-        #block2, #block3, #block4 {
-            background: rgba(0, 0, 0, 0);
-            padding-left: 150px;
-            text-align: left;
-        }
-
-        #block5 {
-            background-color: #333;
-            padding-left: 150px;
-            color: white;
-            text-align: left;
-        }
-
-        #block3 {
-            line-height: 1.6;
-        }
-        /* Style for first-level list items within #block3 */
-        #block3 ol > li {
-            font-size: 24px; /* Larger font size for first-level items */
-            color: #333; /* Dark text for better readability */
-        }
-        /* Style for second-level list items within #block3 */
-        #block3 ol > li > ul > li {
-            font-size: 20px; /* Smaller font size for second-level items */
-            color: #666; /* Slightly lighter color */
-        }
-        .overview-content, .download-content, .author-content {
-            display: flex;
-        }
-        #block3 blockquote {
-            background-color: #f5efef; /* Light gray background */
-            padding: 20px; /* Adds space inside the blockquote */
-            border-left: 5px solid #ccc; /* Adds a left border to the blockquote */
-            margin: 20px; /* Adds space outside the blockquote */
-            font-family: Arial, sans-serif; /* Sets the font of the text within the blockquote */
-            font-size: 16px; /* Sets the size of the text */
-            line-height: 1.6; /* Increases the line spacing */
-            max-width: 80%;
-        }
-
-        .overview-section {
-            flex: 1;
-            /* padding: 40px; */
-            max-width: 40%;
-        }
-        .download-section .author-section .repo-section {
-            flex: 1;
-            /* padding: 40px; */
-            padding: 40px;
-        }
-
-        .author-section {
-            background-color: #333;
-            color: white;
-            padding: 20px 0;
-            text-align: left;
-            /* display: flex; */
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .overview-section h2, .download-section h2, .author-section h2, .repo-section h2 {
-            flex: 1;
-            font-size: 48px;
-        }
-        .overview-section p, .download-section p, .author-section p, .repo-section p, .download-section ol {
-            font-size: 20px;
-        }
-        .image-section {
-            padding-top: 70px;
-            max-width: 45%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .image-section img {
-            width: 100%;
-            height: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="nav-bar">
         <div class="nav-title">Trope in Movies</div>
         <div class="nav-links">
-            <a href="#block1">Overview</a>
-            <a href="#block2">Downloads</a>
-            <a href="#block3">Github</a>
-            <a href="#block4">Contact Us</a>
+            <a href="#overview">Overview</a>
+            <a href="#statistics">Statistics</a>
+            <a href="#download">Downloads</a>
+            <a href="#repo">Github</a>
+            <a href="#author">Contact Us</a>
         </div>
     </div>
-    <div id="block1" class="block">
-        <div>
-            <div class="column">
-                <h2>Abstract Perception</h2>
-                <p>understanding and tokenizing abstract concepts in videos</p>
-            </div>
-            <div class="column">
-                <h2>Long-range Compositional Reasoning</h2>
-                <p>planning and integrating intermediate reasoning steps for managing long-range videos with numerous input</p>
-            </div>
+    <div id="cover" class="block">
+        <div class="column">
+            <h2>Abstract Perception</h2>
+            <p>Understanding and tokenizing abstract concepts in videos</p>
+        </div>
+        <div class="column">
+            <h2>Long-range Compositional Reasoning</h2>
+            <p>Planning and integrating intermediate reasoning steps for managing long-range videos with numerous input</p>
         </div>
     </div>    
-    <div id="block2" class="block">
-        <div class="overview-content">
-            <div class="overview-section">
-                <h2>Overview</h2>
-                <p>Trope in Movies (TiM) comprises (1) 684 movies, each annotated with per-shot keyframes, subtitles, and trope labels, and (2) 95 trope identification queries accompanied by their definitions.</p>
-                <p>TiM is designed as a testbed for exploring two critical yet previously overlooked video reasoning skills: (1) Abstract Perception: understanding and tokenizing abstract concepts in videos, and (2) Long-range Compositional Reasoning: planning and integrating intermediate reasoning steps for managing long-range videos with numerous input.</p>
+    <div id="overview" class="block">
+        <div class="overview-section">
+            <h2>Overview</h2>
+            <p>Trope in Movies (TiM) comprises (1) 684 movies, each annotated with per-shot keyframes, subtitles, and trope labels, and (2) 95 trope identification queries accompanied by their definitions.</p>
+            <p>TiM is designed as a testbed for exploring two critical yet previously overlooked video reasoning skills: (1) Abstract Perception: understanding and tokenizing abstract concepts in videos, and (2) Long-range Compositional Reasoning: planning and integrating intermediate reasoning steps for managing long-range videos with numerous input.</p>
+        </div>
+        <div class="image-section">
+            <img src="images/tim.png" alt="Comparison of challenges between TiM and existing datasets">
+        </div>
+    </div>
+    <div id="statistics" class="block">
+        <h2>Statistics</h2>
+        <div class="sub-block-container">
+            <div class="sub-block">
+                <h3>Tropes</h3>
+                <p>We selected 95 tropes from TiMoS datasets and there're four category of them: Character-Trait(CT), Role-Interaction(RI), Situation(ST) and Storyline(SL)</p>
+                <!-- <button class="popover-button" data-popover="#popover1">Examples & Statistics</button> -->
+                <button class="modal-button" id="openModalBtn">explore more...</button>
+                
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="modal-header">
+                            <h3>About Tropes</h3>
+                            <!-- <button class="close-button">&times;</button> -->
+                        </div>
+                        <div class="modal-body">
+                            <h4>Definitions & Categories</h4>
+                            <div class="scrollable">
+                                <table>
+                                <thead>
+                                    <tr style="text-align: center;">
+                                    <th class="trope-col">Trope</th>
+                                    <th class="category-col">Category</th>
+                                    <th class="definition-col">Definition</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>Big Bad</td>
+                                    <td>Character Trait</td>
+                                    <td>The character who is the direct cause of all of the bad happenings in a story.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Jerkass</td>
+                                    <td>Character Trait</td>
+                                    <td>A character who is so completely obnoxious that it is unbelievable anyone would willingly interact with them.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Faux Affably Evil</td>
+                                    <td>Character Trait</td>
+                                    <td>A villain whose politeness is an act that only serves to enhance their evil.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Smug Snake</td>
+                                    <td>Character Trait</td>
+                                    <td>A type of character (usually a villain) who tends to treat friends and enemies alike with equal disdain.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Abusive Parents</td>
+                                    <td>Character Trait</td>
+                                    <td>This includes parents who are emotionally, verbally, physically, or mentally abusive, or who neglectfully allow their children to be abused \nby others if they don't abuse the child themselves</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Would Hurt a Child</td>
+                                    <td>Character Trait</td>
+                                    <td>People that do hurt children, sometimes even kill them.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Action Girl</td>
+                                    <td>Character Trait</td>
+                                    <td>An Action Girl is a female badass who is tough and kicks butt.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Reasonable Authority Figure</td>
+                                    <td>Character Trait</td>
+                                    <td>Authirity that is open to heros' inasane ideas.  Often, they'll ask for proof and facts rather than follow baseless accusations, but even then, \nthey'll usually humor the heroes and go check out their theories.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Papa Wolf</td>
+                                    <td>Character Trait</td>
+                                    <td>Paternal instinct can transform a Bumbling Dad into an Action Dad. If someone threatens his kids they will soon wish \nthey'd never come within a mile of them.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Deadpan Snarker</td>
+                                    <td>Character Trait</td>
+                                    <td>A character prone to gnomic, sarcastic, sometimes bitter, occasionally whimsical asides.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Determinator</td>
+                                    <td>Character Trait</td>
+                                    <td>A character \ good or evil, male or female, young or old \ who never gives up. Ever. No matter what.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Only Sane Man</td>
+                                    <td>Character Trait</td>
+                                    <td>When there is a group of characters who are all just totally weird, either in general or in a particular scenario, the Only Sane Man is the only \none who, well, isn't.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Anti-Hero</td>
+                                    <td>Character Trait</td>
+                                    <td>An antihero is a protagonist who has the opposite of most of the traditional attributes of a hero.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Asshole Victim</td>
+                                    <td>Character Trait</td>
+                                    <td>When the victim is a bad guy.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Jerk with a Heart of Gold</td>
+                                    <td>Character Trait</td>
+                                    <td>A person you would expect to be a big Jerkass has some redeeming qualities behind their tough demeanor.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Even Evil Has Standards</td>
+                                    <td>Character Trait</td>
+                                    <td>Keep a villain safely on the "still sympathetic" side of the Moral Event Horizon; give him something that he simply will not do.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Affably Evil</td>
+                                    <td>Character Trait</td>
+                                    <td>Villains that are not too bad. There is absolutely nothing separating them from being normal, polite people except for the fact that they want \nto take over the world.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Too Dumb to Live</td>
+                                    <td>Character Trait</td>
+                                    <td>People who are so stupid that they simply do not deserve to survive.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Butt-Monkey</td>
+                                    <td>Character Trait</td>
+                                    <td>The character who is always the butt of the demeaning joke or the "put them through hell" plotline.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Ax-Crazy</td>
+                                    <td>Character Trait</td>
+                                    <td>An "ax-crazy" character is someone who is psychologically unstable and presents a clear and immediate danger to others.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Adorkable</td>
+                                    <td>Character Trait</td>
+                                    <td>An adorkable character might be socially inept, shy or clumsy. However, rather than making them an outcast, these quirks give the character \nan endearing vulnerability.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Berserk Button</td>
+                                    <td>Character Trait</td>
+                                    <td>Some characters always get enraged when given a certain, minor trigger.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Ms. Fanservice</td>
+                                    <td>Character Trait</td>
+                                    <td>A female character who provides a significant amount of Fanservice (generally for males), ranging from simple revealing of cleavage, midriff, \nshoulders or legs, to shots of her curves, hips or derriere (even when covered).</td>
+                                    </tr>
+                                    <tr>
+                                    <td>The Alcoholic</td>
+                                    <td>Character Trait</td>
+                                    <td>This person likes their liquor, and in large amounts.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Disappeared Dad</td>
+                                    <td>Character Trait</td>
+                                    <td>The father of a character or characters is missing or absent.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Would Hit a Girl</td>
+                                    <td>Character Trait</td>
+                                    <td>A guy (good or evil) has no problems with violence against women.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Oh, Crap!</td>
+                                    <td>Role Interaction</td>
+                                    <td>The moment at which a character realizes that something really, REALLY bad is about to happen.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Driven to Suicide</td>
+                                    <td>Role Interaction</td>
+                                    <td>Whatever the reason, a character may be driven to commit suicide.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Adult Fear</td>
+                                    <td>Role Interaction</td>
+                                    <td>Things that mature, well-adjusted adults generally are concerned about, as opposed to supernatural fears.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Not So Different</td>
+                                    <td>Role Interaction</td>
+                                    <td>When one character in a pair (who'd otherwise be different and/or unrelated) discovers that they actually have some things in common, more \nthan the other character would want to believe.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Heroic BSoD</td>
+                                    <td>Role Interaction</td>
+                                    <td>A stunning revelation or horrible event affects a character or someone they care deeply about, leaving them shocked to the point of mentally\n shutting down for a while.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Big \"NO!\"</td>
+                                    <td>Role Interaction</td>
+                                    <td>The moment when a character realizes that something awful has happened, or notices that something awful is about to happen, and screams \n"NOOOOOOOOOOOOOOO!"</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Eye Scream</td>
+                                    <td>Role Interaction</td>
+                                    <td>When the creator of a work takes advantage of our Primal Fear of having something utterly horrible happen to our eyes, usually involving the \ninvasion of the eye sockets by a foreign body.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Gory Discretion Shot</td>
+                                    <td>Role Interaction</td>
+                                    <td>Blood or brains are seen splattering against a wall and the rest is left to the imagination.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Impaled with Extreme Prejudice</td>
+                                    <td>Role Interaction</td>
+                                    <td>When someone gets stabbed in a really extreme way..</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Off with His Head!</td>
+                                    <td>Role Interaction</td>
+                                    <td>When someone is going to get his head chopped off.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Disney Villain Death</td>
+                                    <td>Role Interaction</td>
+                                    <td>Villains exit the film by falling off or out of things.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Your Cheating Heart</td>
+                                    <td>Role Interaction</td>
+                                    <td>Cheating on your partner.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>\"The Reason You Suck\" Speech</td>
+                                    <td>Role Interaction</td>
+                                    <td>One character delivers a speech to another character on all the reasons why that other character sucks or is a horrible person.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Tempting Fate</td>
+                                    <td>Role Interaction</td>
+                                    <td>Tempting Fate is when a character says something that dares the universe into making things miserable for them, and the universe takes them up \non the challenge.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Disproportionate Retribution</td>
+                                    <td>Role Interaction</td>
+                                    <td>the situation where a person let the opponent know that if they so much as sneeze on someone you protect, it will cost them a limb.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Badass Boast</td>
+                                    <td>Role Interaction</td>
+                                    <td>The character has got to be pretty impressive to be able to make this kind of boast convincingly, though sometimes a weaker character will \nbluff like this.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Groin Attack</td>
+                                    <td>Role Interaction</td>
+                                    <td>Groin attack</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Roaring Rampage of Revenge</td>
+                                    <td>Role Interaction</td>
+                                    <td>The Roaring Rampage of Revenge differs from the standard Revenge plot in that our hero dispenses with the Machiavellian plotting that would \ndefine a classic revenge tale and goes straight for the bloodshed.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Big Damn Heroes</td>
+                                    <td>Role Interaction</td>
+                                    <td>Any time the heroes/anti heroes get to save the day in a big, awesome manner.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Heroic Sacrifice</td>
+                                    <td>Role Interaction</td>
+                                    <td>A character saves another/others from harm and is killed, crippled, or maimed as a result.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Screw This, I'm Outta Here!</td>
+                                    <td>Role Interaction</td>
+                                    <td>Screw you guys, I'm going home.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Kick the Dog</td>
+                                    <td>Role Interaction</td>
+                                    <td>When a character does something evil for no apparent gain, because the author wants to demonstrate that he's not a nice guy and shift \naudience sympathy away from him.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Pet the Dog</td>
+                                    <td>Role Interaction</td>
+                                    <td>Show the nasty old crank petting a dog, and you show the audience, aw shucks, they're not that bad of a person after all.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Villainous Breakdown</td>
+                                    <td>Role Interaction</td>
+                                    <td>The tendency of relatively calm and composed villains to lose their cool over the course of the story.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Precision F-Strike</td>
+                                    <td>Role Interaction</td>
+                                    <td>When a character suddenly swears in an uncharacteristically strong manner, or when a swear is unexpectedly used in a work with mild language.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Cluster F-Bomb</td>
+                                    <td>Role Interaction</td>
+                                    <td>Lots of swearing occur.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Jerkass Has a Point</td>
+                                    <td>Role Interaction</td>
+                                    <td>When a jerkass is right.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Idiot Ball</td>
+                                    <td>Role Interaction</td>
+                                    <td>A moment where a character's stupidity fuels an episode, or a small plot line.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Batman Gambit</td>
+                                    <td>Role Interaction</td>
+                                    <td>A plan that revolves entirely around people doing exactly what you'd expect them to do.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Police are Useless</td>
+                                    <td>Situation</td>
+                                    <td>Whenever someone in film or on TV reports a murder, or a monster, or a stalker or whatever, the police come as close to ignoring them \nas procedure will allow.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>The Dragon</td>
+                                    <td>Situation</td>
+                                    <td>There is almost always someone, person or monster, The Hero has to get past to get at the Big Bad.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Cool Car</td>
+                                    <td>Situation</td>
+                                    <td>The hero's ride has to be just as unique and awesome as the hero is. Enter a Cool Car!</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Body Horror</td>
+                                    <td>Situation</td>
+                                    <td>This is any form of horror or squickiness involving body parts, parasitism, disfigurement, mutation, or unsettling bodily configuration.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>The Reveal</td>
+                                    <td>Situation</td>
+                                    <td>A character is revealed as another character's father, a god, or secret suitor or arch nemesis in disguise.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Curb-Stomp Battle</td>
+                                    <td>Situation</td>
+                                    <td>A fight that's extremely one-sided, where one side just absolutely trashes the other with little-to-no effort</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Cassandra Truth</td>
+                                    <td>Situation</td>
+                                    <td>Sometimes people just won't believe you even though you are telling the truth, because the truth sounds insane.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Blatant Lies</td>
+                                    <td>Situation</td>
+                                    <td>A glaringly obvious lie.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Crapsack World</td>
+                                    <td>Situation</td>
+                                    <td>A Crapsack World is a horrible setting of the world where it's dark and hopeless</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Comically Missing the Point</td>
+                                    <td>Situation</td>
+                                    <td>A character completely misses a really obvious point for comic effect.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Fanservice</td>
+                                    <td>Situation</td>
+                                    <td>The use of sex or sexualized situations to reward or entice viewers.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Fan Disservice</td>
+                                    <td>Situation</td>
+                                    <td>Fan Disservice looks like regular garden variety Fanservice, except that the creators intentionally use the circumstances around it to make the \nscene outright creepy or disgusting.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Brick Joke</td>
+                                    <td>Situation</td>
+                                    <td>When two seemingly unrelated jokes work together to create a comedic effect.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Hypocritical Humor</td>
+                                    <td>Situation</td>
+                                    <td>A type of gag in which a character's actions or words contradict each other and this is Played for Laughs.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Does This Remind You of Anything?</td>
+                                    <td>Situation</td>
+                                    <td>Any situation which is made, sometimes for comic effect, sometimes for dramatic effect, to look like another situation.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Black Comedy</td>
+                                    <td>Situation</td>
+                                    <td>A sub-genre of comedy and satire where topics and events that are usually treated seriously are treated in a satirical manner, while still being \nportrayed as the negative events that they are.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Irony</td>
+                                    <td>Situation</td>
+                                    <td>The intended meaning is an inversion of the plain meaning.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Exact Words</td>
+                                    <td>Situation</td>
+                                    <td>When the exact wording of a rule, promise, prophecy, etc. matters more than the spirit of the wording, it's an Exact Words situation.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Stealth Pun</td>
+                                    <td>Situation</td>
+                                    <td>The writers put in a joke (almost always a pun), but never make or put in a Punch Line or explicit statement, hiding it in the set up of the joke.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Bittersweet Ending</td>
+                                    <td>Story Line</td>
+                                    <td>When victory came at a harsh price, when, for whatever reason, the heroes cannot fully enjoy the reward of their actions, when some \nirrevocable loss has happened during the course of the events, and nothing will ever be the same again.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Karma Houdini</td>
+                                    <td>Story Line</td>
+                                    <td>The character has done a number of things that deserve a karmic comeuppance, most importantly things that caused harm to the innocent. But \nwhen the time comes for the hammer to fall, that's not what happens. At least, not on them. They don\t get what they deserve.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Downer Ending</td>
+                                    <td>Story Line</td>
+                                    <td>A finale to a movie that ends things in a way that varies from sad to tragic.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Laser-Guided Karma</td>
+                                    <td>Story Line</td>
+                                    <td>If you mistreat the people and things around you, karma will strike you down.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Earn Your Happy Ending</td>
+                                    <td>Story Line</td>
+                                    <td>A cast of characters in a story go through a lot more hardship, anguish and grief than is really necessary. In the end, however, you see them get \ntheir happily-ever-after.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Karmic Death</td>
+                                    <td>Story Line</td>
+                                    <td>When the villain dies in a manner that is completely their own fault. Or, at least, obviously not the hero's.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Nice Job Breaking It, Hero!</td>
+                                    <td>Story Line</td>
+                                    <td>The hero has accomplished their goal, but it turns out that by the very act of success, they've unwittingly made things worse.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>My God, What Have I Done?</td>
+                                    <td>Story Line</td>
+                                    <td>Well-intentioned but misguided character (very likely a Tragic Hero, a Tragic Villain or Anti-Villain) comes to realize that his actions have\n caused incredible damage, physical pain, emotional pain, or even loss of life.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>What the Hell, Hero?</td>
+                                    <td>Story Line</td>
+                                    <td>When characters In-Universe call out one of the heroes for doing something clearly unheroic, if not outright heinous.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Hope Spot</td>
+                                    <td>Story Line</td>
+                                    <td>The Protagonist is about to face utter defeat. Suddenly, he finds a glimmer of hope what have you only to be crushed cruelly by the bad guys \nreturning in force.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Heel Face Turn</td>
+                                    <td>Story Line</td>
+                                    <td>When a bad guy turns good.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Took a Level in Badass</td>
+                                    <td>Story Line</td>
+                                    <td>A charcter who is transformed into someone stronger and tougher that the viewer almost can't recognize him.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Chekhov's Gun</td>
+                                    <td>Story Line</td>
+                                    <td>An insignificant object that later turns out to be important.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Foreshadowing</td>
+                                    <td>Story Line</td>
+                                    <td>A clue or allusion embedded in the narrative that predicts some later event or revelation.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Chekhov's Skill</td>
+                                    <td>Story Line</td>
+                                    <td>Training in any kind of skill, ability, or knowledge that will likely later come in handy.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Chekhov's Gunman</td>
+                                    <td>Story Line</td>
+                                    <td>Any character who is innocuously and unimportantly introduced to the viewer, but who later proves to be important by the end of the episode.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Red Herring</td>
+                                    <td>Story Line</td>
+                                    <td>A clue that leads in the wrong direction.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Ironic Echo</td>
+                                    <td>Story Line</td>
+                                    <td>When a character repeats a comment they received in a different situation, giving it a flipped or surprising new meaning.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Hoist by His Own Petard</td>
+                                    <td>Story Line</td>
+                                    <td>The villain's own weapon or malicious plan is the cause of their downfall and/or death.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Meaningful Echo</td>
+                                    <td>Story Line</td>
+                                    <td>It occurs when characters, in their usual way, say things to one another, and repeat it later on to give extra meaning.</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Freudian Excuse</td>
+                                    <td>Story Line</td>
+                                    <td>The villain had an abusive and particularly violent childhood (such as Abusive Parents, being bullied by peers, etc.), making them insane and warping their perception on the universe</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                            <h4>Trope WordCloud in TiM (Fullset)</h4>
+                            <div class="image-wc">
+                                <div class="image-container">
+                                    <img src="images/wordcloud_all.png" alt="WordCloud">
+                                    <p class="caption">All tropes</p>
+                                </div>
+                            </div>
+                            <div class="image-row">
+                                <div class="image-container">
+                                    <img src="images/wordcloud_CT.png" alt="Character Trait">
+                                    <p class="caption">Character-Trait</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/wordcloud_RI.png" alt="Role Interaction">
+                                    <p class="caption">Role-Interaction</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/wordcloud_ST.png" alt="Sitation">
+                                    <p class="caption">Sitation</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/wordcloud_SL.png" alt="Storyline">
+                                    <p class="caption">Storyline</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="image-section">
-                <img src="images/tim.png" alt="Comparison of challenges between TiM and existing datasets">
+            <div class="sub-block">
+                <h3>Movies</h3>
+                <p></p>
+                <button class="modal-button" id="openModalBtn">explore more...</button>
+                
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="modal-header">
+                            <h3>About Movies</h3>
+                            <!-- <button class="close-button">&times;</button> -->
+                        </div>
+                        <div class="modal-body">
+                            <h4>Definitions & Categories</h4>
+                            <h4>Trope WordCloud in TiM (Fullset)</h4>
+                            <div class="image-wc">
+                                <div class="image-container">
+                                    <img src="images/wordcloud_all.png" alt="WordCloud">
+                                    <p class="caption">All tropes</p>
+                                </div>
+                            </div>
+                            <div class="image-row">
+                                <div class="image-container">
+                                    <img src="images/wordcloud_CT.png" alt="Character Trait">
+                                    <p class="caption">Character-Trait</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/wordcloud_RI.png" alt="Role Interaction">
+                                    <p class="caption">Role-Interaction</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/wordcloud_ST.png" alt="Sitation">
+                                    <p class="caption">Sitation</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/wordcloud_SL.png" alt="Storyline">
+                                    <p class="caption">Storyline</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div id="block3" class="block">
-        <div class="download-content">
-            <div class="download-section">
-                <h2>Download</h2>
-                <ol>
-                    <li>
-                        <strong>Annotation of QA</strong>
+
+    <div id="download" class="block">
+        <h2>Download</h2>
+        <ol>
+            <li>
+                <strong>Annotation of QA</strong>
+                <ul>
+                    <li>It contains three JSON files, corresponding to three experiment setups
                         <ul>
-                            <li>It contains three JSON files, corresponding to three experiment setups
-                                <ul>
-                                    <li><a href="https://drive.google.com/file/d/1A-nyPbPLa_o7Edkhj7nf1_vu_6J96j2R/view?usp=sharing"><code>tim_fullset.json</code></a></li>
-                                    <li><a href="https://drive.google.com/file/d/1gktosdX6Y3PBMvdLthw_q2P7EknmQs8K/view?usp=sharing"><code>tim_vdset.json</code></a></li>
-                                    <li><a href="https://drive.google.com/file/d/1IxGS99nPJri2YYYIfEdloUekYsKhh8k7/view?usp=sharing"><code>tim_mainset.json</code></a></li>
-                                </ul>
-                            <li>Each JSON file can be loaded as a JSON object, the format is shown as follows:
-                                <blockquote>
-                                    <pre><code>[
+                            <li><a href="https://drive.google.com/file/d/1A-nyPbPLa_o7Edkhj7nf1_vu_6J96j2R/view?usp=sharing"><code>tim_fullset.json</code></a></li>
+                            <li><a href="https://drive.google.com/file/d/1gktosdX6Y3PBMvdLthw_q2P7EknmQs8K/view?usp=sharing"><code>tim_vdset.json</code></a></li>
+                            <li><a href="https://drive.google.com/file/d/1IxGS99nPJri2YYYIfEdloUekYsKhh8k7/view?usp=sharing"><code>tim_mainset.json</code></a></li>
+                        </ul>
+                    <li>Each JSON file can be loaded as a JSON object, the format is shown as follows:</li>
+                    <button class="bq-toggle-button">Click here to show</button>
+                    <blockquote class="closed-blockquote">
+                        <pre><code>[
     {
-        "video": "tt1637725",          # IMDB ID
-        "num_option": 2,
-        "a0": "yes",
-        "a1": "no",
-        "trope": "Big Bad",            # Trope name
-        "category": "Character Trait", # Trope category
-        "qid": "tt1637725_0",          # {IMDB ID}_{Trope ID}
-        "answer": 1,
-        "question": "Is the trope '{Trope name}', which means '{Trope definition}', relevant to the movie?"
+    "video": "tt1637725",          # IMDB ID
+    "num_option": 2,
+    "a0": "yes",
+    "a1": "no",
+    "trope": "Big Bad",            # Trope name
+    "category": "Character Trait", # Trope category
+    "qid": "tt1637725_0",          # {IMDB ID}_{Trope ID}
+    "answer": 1,
+    "question": "Is the trope '{Trope name}', which means '{Trope definition}', relevant to the movie?"
     }
 ]</code></pre>
-                                </blockquote>
-                            </li>
+                    </blockquote>
+                </ul>
+            </li>
+            <li>
+                <strong>MovieNet per-shot Keyframes</strong>
+                <ul>
+                    <li>From our link
+                        <ul>
+                            <li><a href="https://drive.google.com/file/d/1UDK59NJ5dvi-loD3AV_sPBDxoIEC4YBP/view?usp=sharing">Fullset</a></li>
+                            <li><a href="https://drive.google.com/file/d/1tc5BJApEdseklCLjlZc4W2cCqSwDZu8z/view?usp=sharing">VDset</a></li>
+                            <li><a href="https://drive.google.com/file/d/1nAiELTfU1XXgK-e7b-lXD5T8cCdIhMo4/view?usp=sharing">Mainset</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <strong>MovieNet per-shot Keyframes</strong>
-                        <ul>
-                            <li>From our link
-                                <ul>
-                                    <li><a href="https://drive.google.com/file/d/1UDK59NJ5dvi-loD3AV_sPBDxoIEC4YBP/view?usp=sharing">Fullset</a></li>
-                                    <li><a href="https://drive.google.com/file/d/1tc5BJApEdseklCLjlZc4W2cCqSwDZu8z/view?usp=sharing">VDset</a></li>
-                                    <li><a href="https://drive.google.com/file/d/1nAiELTfU1XXgK-e7b-lXD5T8cCdIhMo4/view?usp=sharing">Mainset</a></li>
-                                </ul>
-                            </li>
-                            <li>From MovieNet official site: <a href="https://movienet.github.io/">Visit MovieNet</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Preprocessed Subtitles</strong>
-                        <ul>
-                            <li><a href="https://drive.google.com/file/d/1XLsw2vQoOHegR_9rrV0q8CFLNVOlcrCL/view?usp=sharing"><code>subtitles.zip</code></a> contains 246 JSON files, each corresponding to subtitles in a movie in TiM</li>
-                            <li>Each JSON file can be loaded as a JSON object, the format is shown as follows. 
-                            <li>Note that the key if corresponding to image filename under <strong>MovieNet per-shot Keyframes</strong></li>
-                                <blockquote>
-                                    <pre><code>{
+                    <li>From MovieNet official site: <a href="https://movienet.github.io/">Visit MovieNet</a></li>
+                </ul>
+            </li>
+            <li>
+                <strong>Preprocessed Subtitles</strong>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1XLsw2vQoOHegR_9rrV0q8CFLNVOlcrCL/view?usp=sharing"><code>subtitles.zip</code></a> contains 246 JSON files, each corresponding to subtitles in a movie in TiM</li>
+                    <li>Each JSON file can be loaded as a JSON object, the format is shown as follows. 
+                    <li>Note that the key is corresponding to the image filename under <strong>MovieNet per-shot Keyframes</strong></li>
+                    <button class="bq-toggle-button">Click here to show</button>
+                    <blockquote class="closed-blockquote">
+                        <pre><code>{
     "shot_{shot_idx}_img_{img_idx}": {
         "bboxes": [], # deprecated
         "subtitles": [
@@ -249,30 +678,21 @@
             subtitle2,
             ...
         ] # subtitles within the shot
-    } 
+    }   
 }</code></pre>
-                        </ul>
-                    </li>
-                </ol>
-            </div>
-        </div>
+                </ul>
+            </li>
+        </ol>
     </div>
-    <div id="block4" class="block">
-        <div class="overview-content">
-            <div class="repo-section">
-                <h2>Github</h2>
-                <p>We provide some useful script to pre-process, access and manage the TiM dataset in our <a href="https://github.com/ander1119/TiM">repository</a></p>
-            </div>
-        </div>
+    <div id="repo" class="block">
+        <h2>Github</h2>
+        <p>We provide some useful script to pre-process, access and manage the TiM dataset in our <a href="https://github.com/ander1119/TiM">repository</a></p>
     </div>
-    <div id="block5" class="block">
-        <div class="overview-content">
-            <div class="author-section">
-                <h2>Contact Us</h2>
-                <p>Hung-Ting Su: htsu@cmlab.csie.ntu.edu.tw</p>
-                <p>Chun-Tong Chao: adnchao@cmlab.csie.ntu.edu.tw</p>
-            </div>
-        </div>
+    <div id="author" class="block">
+        <h2>Contact Us</h2>
+        <p>Hung-Ting Su: htsu@cmlab.csie.ntu.edu.tw</p>
+        <p>Chun-Tong Chao: adnchao@cmlab.csie.ntu.edu.tw</p>
     </div>
+    <script src="scripts.js"></script>
 </body>
 </html>

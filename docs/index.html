@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TiM</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="nav-bar">
-        <div class="nav-title">Trope in Movies</div>
+        <div class="nav-left">
+            <img src="images/logo.png" alt="Logo" class="nav-logo">
+            <div class="nav-title">Trope in Movies</div>
+        </div>
         <div class="nav-links">
             <a href="#overview">Overview</a>
             <a href="#statistics">Statistics</a>
@@ -44,11 +48,11 @@
                 <h3>Tropes</h3>
                 <p>We selected 95 tropes from TiMoS datasets and there're four category of them: Character-Trait(CT), Role-Interaction(RI), Situation(ST) and Storyline(SL)</p>
                 <!-- <button class="popover-button" data-popover="#popover1">Examples & Statistics</button> -->
-                <button class="modal-button" id="openModalBtn">explore more...</button>
+                <button class="modal-button" id="openModalBtnTrope">explore more...</button>
                 
-                <div id="myModal" class="modal">
+                <div id="myModalTrope" class="modal">
                     <div class="modal-content">
-                        <span class="close">&times;</span>
+                        <span class="closeTrope">&times;</span>
                         <div class="modal-header">
                             <h3>About Tropes</h3>
                             <!-- <button class="close-button">&times;</button> -->
@@ -550,7 +554,7 @@
                                     <p class="caption">All tropes</p>
                                 </div>
                             </div>
-                            <div class="image-row">
+                            <div class="image-row4">
                                 <div class="image-container">
                                     <img src="images/wordcloud_CT.png" alt="Character Trait">
                                     <p class="caption">Character-Trait</p>
@@ -574,43 +578,62 @@
             </div>
             <div class="sub-block">
                 <h3>Movies</h3>
-                <p></p>
-                <button class="modal-button" id="openModalBtn">explore more...</button>
+                <p>We selected 684 movies from MovieNet, each movie is annotated with per-shot keyframes, subtitles (246 of them have), and trope labels. </p>
+                <button class="modal-button" id="openModalBtnMovie">explore more...</button>
                 
-                <div id="myModal" class="modal">
+                <div id="myModalMovie" class="modal">
                     <div class="modal-content">
-                        <span class="close">&times;</span>
+                        <span class="closeMovie">&times;</span>
                         <div class="modal-header">
                             <h3>About Movies</h3>
-                            <!-- <button class="close-button">&times;</button> -->
                         </div>
                         <div class="modal-body">
-                            <h4>Definitions & Categories</h4>
-                            <h4>Trope WordCloud in TiM (Fullset)</h4>
-                            <div class="image-wc">
+                            <h4>Data Analysis</h4>
+                            <div class="image-row3">
                                 <div class="image-container">
-                                    <img src="images/wordcloud_all.png" alt="WordCloud">
-                                    <p class="caption">All tropes</p>
+                                    <img src="images/number_of_shots_tim_fullset.png" alt="number_of_shots_tim_fullset">
+                                    <p class="caption">Fullset</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/number_of_shots_tim_vdset.png" alt="number_of_shots_tim_vdset">
+                                    <p class="caption">VDset</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/number_of_shots_tim_mainset.png" alt="number_of_shots_tim_mainset">
+                                    <p class="caption">Mainset</p>
                                 </div>
                             </div>
-                            <div class="image-row">
+                            <p class="caption">Number of shots in each movie</p>
+                            <div class="image-row3">
                                 <div class="image-container">
-                                    <img src="images/wordcloud_CT.png" alt="Character Trait">
-                                    <p class="caption">Character-Trait</p>
+                                    <img src="images/len_subtitles_tim_fullset.png" alt="len_subtitles_tim_fullset">
+                                    <p class="caption">Fullset</p>
                                 </div>
                                 <div class="image-container">
-                                    <img src="images/wordcloud_RI.png" alt="Role Interaction">
-                                    <p class="caption">Role-Interaction</p>
+                                    <img src="images/len_subtitles_tim_vdset.png" alt="len_subtitles_tim_vdset">
+                                    <p class="caption">VDset</p>
                                 </div>
                                 <div class="image-container">
-                                    <img src="images/wordcloud_ST.png" alt="Sitation">
-                                    <p class="caption">Sitation</p>
-                                </div>
-                                <div class="image-container">
-                                    <img src="images/wordcloud_SL.png" alt="Storyline">
-                                    <p class="caption">Storyline</p>
-                                </div>
+                                    <img src="images/len_subtitles_tim_mainset.png" alt= "len_subtitles_tim_mainset">
+                                    <p class="caption">Mainset</p>
+                                </div>   
                             </div>
+                            <p class="caption">Character length of subtitles in each movie</p>
+                            <div class="image-row3">
+                                <div class="image-container">
+                                    <img src="images/line_subtitles_tim_fullset.png" alt="line_subtitles_tim_fullset">
+                                    <p class="caption">Fullset</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/line_subtitles_tim_vdset.png" alt="line_subtitles_tim_vdset">
+                                    <p class="caption">VDset</p>
+                                </div>
+                                <div class="image-container">
+                                    <img src="images/len_subtitles_tim_mainset.png" alt= "len_subtitles_tim_mainset">
+                                    <p class="caption">Mainset</p>
+                                </div>   
+                            </div>
+                            <p class="caption">Line number of subtitles in each movie</p>
                         </div>
                     </div>
                 </div>

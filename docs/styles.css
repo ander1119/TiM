@@ -26,10 +26,19 @@ p {
     justify-content: space-between;
     align-items: center;
 
-    .nav-title {
-        margin-left: 40px;
-        font-size: 24px;
+    .nav-left {
+        display: flex;
+        align-items: center;
+        .nav-logo {
+            margin-left: 20px;
+            height: 40px; /* Adjust the height as needed */
+        }
+        .nav-title {
+            margin-left: 40px;
+            font-size: 24px;
+        }
     }
+    
     .nav-links {
         margin-right: 40px;
 
@@ -64,7 +73,7 @@ p {
     padding-left: 0px;
     padding-right: 0px;
     padding-top: 0px;
-    padding-bottom: 200px;
+    /* padding-bottom: 100px; */
 
     > div {
         display: flex;
@@ -76,7 +85,8 @@ p {
     .column {
         background: rgba(0, 0, 0, 0.5);
         padding: 20px;
-        width: 35%;
+        width: 43%;
+        height: 300px;
         box-sizing: border-box;
         display: block;
         h2 {
@@ -245,7 +255,7 @@ p {
                 margin-top: 5px;
             }
         }
-        .image-row {
+        .image-row4 {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
@@ -269,6 +279,31 @@ p {
                 margin-top: 5px;
             }
         }
+
+        .image-row3 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-left: 100px;
+            padding-right: 100px;
+
+            
+            .image-container {
+                width: 32%;
+                text-align: center;
+            }
+            .image-container img {
+                width: 100%;
+                height: auto;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+            .caption {
+                font-size: 15px;
+                color: #666;
+                margin-top: 5px;
+            }
+        }
     }
     
     @keyframes animateTop {
@@ -276,13 +311,25 @@ p {
         to {top: 0; opacity: 1}
     }
     
-    .close {
+    .closeTrope {
         color: #aaa;
         float: right;
         font-size: 28px;
     }
-    .close:hover,
-    .close:focus {
+    .closeTrope:hover,
+    .closeTrope:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .closeMovie {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+    }
+    .closeMovie:hover,
+    .closeMovie:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;

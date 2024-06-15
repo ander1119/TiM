@@ -13,23 +13,44 @@ document.querySelectorAll('.bq-toggle-button').forEach(button => {
     });
 });
 
-var modal = document.getElementById("myModal");
-var openModalBtn = document.getElementById("openModalBtn");
-var closeModalBtn = document.getElementsByClassName("close")[0];
+var modalTrope = document.getElementById("myModalTrope");
+var openModalBtnTrope = document.getElementById("openModalBtnTrope");
+var closeModalBtnTrope = document.getElementsByClassName("closeTrope")[0];
 
 // Open the modal
-openModalBtn.onclick = function() {
-    modal.style.display = "block";
+openModalBtnTrope.onclick = function() {
+    modalTrope.style.display = "block";
 }
 
 // Close the modal
-closeModalBtn.onclick = function() {
-    modal.style.display = "none";
+closeModalBtnTrope.onclick = function() {
+    modalTrope.style.display = "none";
 }
 
 // Close the modal when clicking outside of it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == modalTrope) {
+        modalTrope.style.display = "none";
+    }
+}
+
+var modalMovie = document.getElementById("myModalMovie");
+var openModalBtnMovie = document.getElementById("openModalBtnMovie");
+var closeModalBtnMovie = document.getElementsByClassName("closeMovie")[0];
+
+// Open the modal
+openModalBtnMovie.onclick = function() {
+    modalMovie.style.display = "block";
+}
+
+// Close the modal
+closeModalBtnMovie.onclick = function() {
+    modalMovie.style.display = "none";
+}
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+    if (event.target == modalMovie) {
+        modalMovie.style.display = "none";
     }
 }

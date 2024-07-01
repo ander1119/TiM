@@ -88,7 +88,6 @@ We made some modification on SOTA method and enable them accepting format of TiM
 | Method | Modality | # Frames  | VLM    | Coder | Pre.  | Rec.  | F1    | CT-F1 | RI-F1 | ST-F1 | SL-F1 |
 |--------|----------|-----------|--------|-------|-------|-------|-------|-------|-------|-------|-------|
 | FRVoRI | V+D      | 120       | BLIP-2 | GPT-4 | 27.88 | 39.80 | 32.79 | 30.52 | 29.55 | 42.42 | 49.67 |
-|
 |        | **V**     | 120      | BLIP-2 | GPT-4 | 27.07 | 32.23 | 29.42 | 12.36 | 22.75 | 35.62 | 48.00 |
 |        | V+D      | **everyshot** | BLIP-2 | GPT-4 | 27.27 | 46.15 | 34.29 | 33.30 | 30.12 | 44.68 | 50.00 | 
 |        | V+D      | **16**        | BLIP-2 | GPT-4 | 25.71 | 40.72 | 31.52 | 23.74 | 25.56 | 38.83 | 47.54 | 

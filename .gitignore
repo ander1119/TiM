@@ -201,7 +201,6 @@ poetry.toml
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,jupyternotebooks
 n
 *cache/
-images/
 /chekpoints/
 /outputs/
 /results/

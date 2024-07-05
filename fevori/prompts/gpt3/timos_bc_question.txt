@@ -1,0 +1,16 @@
+We want to identify the presence or absense of a specific trope in a movie. We have information about the movie. We want to return the option (yes/no) that is most likely to the trope presense
+
+Example:
+- Question: is trope "Screw This, I'm Outta Here!" present in the video segment
+- Caption of 200'th frame: a woman is about riding a motorcycle
+- Character mood in 200'th frame: the woman is kind of angry
+- Possible answer: ['yes', 'no']
+Take a close look at the question and information provided and select one of the possible answers.
+- Selected answer: yes
+
+Example:
+- Question: {question}
+{info}
+- Possible answers: {options}
+Take a close look at the question and information provided and select one of the possible answers.
+- Selected answer:

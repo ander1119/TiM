@@ -1,0 +1,20 @@
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]
+    """Returns (answer, reason, info) tuple when answering query with possible_answers
+    Parameters
+    ----------
+    video (VideoSegment): 
+        Target video on which the command will be executed
+    possible_answers (list[str]): 
+        A list of possible answers that the command might return as answer
+    query (str): 
+        The question or query that needs to be answered using the video
+
+    Returns
+    -------
+    answer (str): 
+        The chosen answer from possible_answers list
+    reason (str): 
+        reason for why choosing the answer
+    info (dict): 
+        intermediate results collected from every api call
+    """

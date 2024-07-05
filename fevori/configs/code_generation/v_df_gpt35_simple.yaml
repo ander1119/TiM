@@ -1,0 +1,101 @@
+multiprocessing: True                                 # Run the models and samples in parallel
+path_pretrained_models: './pretrained_models'         # Path to the pretrained models
+execute_code: False                                   # Execute the code after generating it. Only applies to main_batch
+
+results_dir: ./cached_code/v_df_gpt35_simple   # Directory to save the results
+
+dataset:
+    data_path: /project/mira/dataset/MovieNet
+    anno_path: ../tropes/tim_full_code_generation.json
+    dataset_name: TiM
+    version: multiplechoice
+    fps: 10
+    max_num_frames: 120
+    split: .
+    batch_size: 8
+    # max_samples: 1
+    start_sample: 0
+
+codex:
+    api_prompt: ./prompts/benchmarks/tim/face/api.py
+    function_signature_prompt: ./prompts/benchmarks/tim/function_signature.prompt
+    function_format_prompt: ./prompts/benchmarks/tim/function_format.prompt
+    example_prompt: [
+        ./prompts/benchmarks/tim/face/examples/asshole_victim.py,
+        ./prompts/benchmarks/tim/face/examples/downer_ending.py,
+        ./prompts/benchmarks/tim/face/examples/kick_the_dog.py,
+        ./prompts/benchmarks/tim/face/examples/love_at_first_sight.py,
+        ./prompts/benchmarks/tim/face/examples/stealth_pun.py
+    ]
+    prototype_prompt: ./prompts/benchmarks/tim/prototype.prompt
+    # reflection_example_prompt: [
+    # ./prompts/benchmarks/timos/reflection_example_2.prompt,
+    # ]
+    temperature: 0.                                   # Temperature for Codex. (Almost) deterministic if 0
+    best_of: 1                                        # Number of tries to choose from. Use when temperature > 0
+    max_tokens: 4096                                  # Maximum number of tokens to generate for Codex
+    prompt: ./prompts/chatapi.prompt                  # Codex prompt file, which defines the API. (doesn't support video for now due to token limits)
+    model: gpt-3.5-turbo-0125                         # Codex model to use. [gpt-4-turbo, gpt-3.5-turbo]. See openai.Model.list() for available models
+    
+
+use_cached_codex: False                               # Use previously-computed Codex results
+cached_codex_path: ''                                 # Path to the csv results file from which to load Codex results
+
+vqa_model: gemini                                     # should be one of the following: gemini, blip
+face_model: deepface                                  # should be one of the following: deepface, label
+
+load_models:                                          # Which pretrained models to load
+    maskrcnn: False
+    clip: False
+    glip: False
+    owlvit: False
+    tcl: False
+    gpt3_qa: False
+    gpt3_general: False
+    gpt3_summarize: False
+    depth: False
+    blip: False
+    saliency: False
+    xvlm: False
+    codex: True
+    codellama: False
+    reflection: False
+    gemini: False
+    deepface: False
+
+# Other unimportant parameters
+gpt3:                                                   # GPT-3 configuration
+    n_votes: 1                                          # Number of tries to use for GPT-3. Use with temperature > 0
+    qa_prompt: ./prompts/gpt3/gpt3_qa.txt
+    guess_prompt: ./prompts/gpt3/gpt3_process_guess.txt
+    temperature: 0.                                     # Temperature for GPT-3. Almost deterministic if 0
+    model: gpt-3.5-turbo-0125                           # See openai.Model.list() for available models
+    
+# some model parameter
+detect_thresholds:                                  # Thresholds for the models that perform detection
+    glip: 0.5
+    maskrcnn: 0.8
+    owlvit: 0.1
+ratio_box_area_to_image_area: 0.0                   # Any detected patch under this size will not be returned
+crop_larger_margin: True                            # Increase size of crop by 10% to include more context
+verify_property:                                    # Parameters for verify_property
+    model: xvlm                                     # Model to use for verify_property
+    thresh_clip: 0.6
+    thresh_tcl: 0.25
+    thresh_xvlm: 0.6
+best_match_model: xvlm                              # Which model to use for best_[image, text]_match
+blip_half_precision: True                           # Use 8bit (Faster but slightly less accurate) for BLIP if True
+blip_v2_model_type: blip2-flan-t5-xl                # Which model to use for BLIP-2
+
+# Saving and loading parameters
+save: True                                          # Save the results to a file
+save_new_results: True                              # If False, overwrite the results file
+use_cache: False                                    # Use cache for the models that support it (now, GPT-3)
+clear_cache: False                                  # Clear stored cache
+log_every: 20                                       # Log accuracy every n batches
+wandb: False
+
+# reasoning prompt
+select_answer_prompt: ./prompts/gpt3/timos_bc_question_reason.txt
+fixed_code_file: ./prompts/fixed_code/blip2_video.prompt
+use_fixed_code: False                               # Use a fixed code for all samples (do not generate with Codex)

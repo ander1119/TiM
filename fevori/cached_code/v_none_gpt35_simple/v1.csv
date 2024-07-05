@@ -1,0 +1,2569 @@
+answer|groundtruth|id|trope|query|img_path|possible_answers|code|info|reason|compilation_error|runtime_error
+NO EXECUTION|yes|tt0120586_0|Big Bad|"Is the trope ""Big Bad"", which means ""The character who is the direct cause of all of the bad happenings in a story."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Big Bad
+    # Definition: The character who is the direct cause of all of the bad happenings in a story.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify the character responsible for the major negative events.
+    # 2. Character Analysis: Look for the character who consistently drives the plot towards negative outcomes.
+    # 3. Event Analysis: Identify the events directly linked to the character's actions.
+    # 4. Answer Selection: Use the collected information to determine if the ""Big Bad"" trope is relevant to the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    big_bad_character = None
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        characters = frame.find(""person"")
+        for character in characters:
+            if character.exists(""evil""):
+                big_bad_character = character
+                break
+
+    if big_bad_character:
+        info[""Big Bad Character""] = big_bad_character.simple_query(""Describe the character responsible for the bad events."")
+
+    # Determine if the ""Big Bad"" trope is relevant based on the presence of the identified character
+    answer = ""yes"" if big_bad_character else ""no""
+    reason = ""The presence of a character driving the negative events aligns with the 'Big Bad' trope.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_1|Jerkass|"Is the trope ""Jerkass"", which means ""A character who is so completely obnoxious that it is unbelievable anyone would willingly interact with them."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Jerkass
+    # Definition: A character who is so completely obnoxious that it is unbelievable anyone would willingly interact with them.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify the character in question and observe their interactions with other characters.
+    # 2. Character Analysis: Look for traits and behaviors that align with the definition of a Jerkass, such as rudeness, selfishness, or lack of empathy.
+    # 3. Interaction Analysis: Examine how other characters respond to the Jerkass character to gauge the impact of their behavior.
+    # 4. Answer Selection: Use the collected information to determine if the Jerkass trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Identify the character in question
+        jerkass_character = frame.find(""jerkass"")
+        
+        if jerkass_character:
+            # Analyze the character's traits and behaviors
+            character_traits = jerkass_character[0].simple_query(""Describe the character's traits and behaviors."")
+            info[f""Character traits in frame {i}""] = character_traits
+            
+            # Check interactions with other characters
+            interaction_response = jerkass_character[0].simple_query(""How do other characters react to this character?"")
+            info[f""Interaction in frame {i}""] = interaction_response
+    
+    # Determine if the Jerkass trope is relevant based on the collected information
+    is_jerkass = any(""rude"" in info.get(f""Character traits in frame {i}"", """").lower() for i in range(video_segment.num_frames))
+    
+    answer = possible_answers[0] if is_jerkass else possible_answers[1]
+    reason = ""The character exhibits traits of rudeness and selfishness, leading to negative interactions with others.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_2|Faux Affably Evil|"Is the trope ""Faux Affably Evil"", which means ""A villain whose politeness is an act that only serves to enhance their evil."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Faux Affably Evil
+    # Definition: A villain whose politeness is an act that only serves to enhance their evil.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify the character portraying politeness.
+    # 2. Character Analysis: Look for cues indicating the character's true intentions behind their polite behavior.
+    # 3. Evil Indicators: Search for visual or contextual elements suggesting the character's evil nature.
+    # 4. Answer Selection: Use collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""villain""):
+            politeness_query = frame.simple_query(""Is the villain being excessively polite?"", to_yesno=True)
+            if ""yes"" in politeness_query.lower():
+                politeness_description = frame.simple_query(""Describe the villain's polite behavior."")
+                evil_indicators = frame.simple_query(""Are there any visual cues indicating the villain's evil nature?"", to_yesno=True)
+                info[f""Polite behavior in frame {i}""] = politeness_description
+                info[f""Evil indicators in frame {i}""] = evil_indicators
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_3|Smug Snake|"Is the trope ""Smug Snake"", which means ""A type of character (usually a villain) who tends to treat friends and enemies alike with equal disdain."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Smug Snake
+    # Definition: A type of character (usually a villain) who tends to treat friends and enemies alike with equal disdain.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify the character's interactions with others, focusing on their demeanor and behavior.
+    # 2. Character Analysis: Look for instances where the character displays disdain towards both friends and enemies, indicating a smug attitude.
+    # 3. Interaction Assessment: Evaluate the character's behavior and dialogue to determine if they exhibit the traits of a ""Smug Snake.""
+    # 4. Answer Selection: Use the collected information to decide if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect the presence of the character in question
+        if frame.exists(""villain""):
+            demeanor = frame.simple_query(""How is the villain treating others?"")
+            if ""disdain"" in demeanor.lower():
+                info[f""Villain's behavior in frame {i}""] = demeanor
+
+    # Assess if the character fits the ""Smug Snake"" trope based on their interactions
+    answer = ""yes"" if any(""disdain"" in value.lower() for value in info.values()) else ""no""
+    reason = ""The character displays disdain towards both friends and enemies, fitting the 'Smug Snake' trope."" if answer == ""yes"" else ""The character does not exhibit the traits of a 'Smug Snake'.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_4|Abusive Parents|"Is the trope ""Abusive Parents"", which means ""This includes parents who are emotionally, verbally, physically, or mentally abusive, or who neglectfully allow their children to be abused 
+by others if they don't abuse the child themselves"", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Abusive Parents
+    # Definition: This includes parents who are emotionally, verbally, physically, or mentally abusive, or who neglectfully allow their children to be abused by others if they don't abuse the child themselves.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify parental figures and their interactions with children or other characters.
+    # 2. Behavior Analysis: Look for signs of emotional, verbal, physical, or mental abuse in the interactions between parents and children.
+    # 3. Neglect Detection: Identify instances where parents neglect their children's well-being or allow abuse to occur.
+    # 4. Answer Selection: Use the collected information to determine if the ""Abusive Parents"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect parental figures and their interactions
+        parental_figures = frame.find(""parent"")
+        for parent in parental_figures:
+            # Analyze the behavior of the parent towards the child
+            abuse_behavior = parent.simple_query(""Describe the interaction with the child. Is there any sign of abuse?"")
+            neglect_behavior = parent.simple_query(""Is there any neglectful behavior towards the child?"", to_yesno=True)
+            # Store the collected information
+            info[f""Abuse behavior in frame {i}""] = abuse_behavior
+            info[f""Neglect behavior in frame {i}""] = neglect_behavior
+    
+    # Analyze the collected information to determine if the trope is relevant
+    has_abusive_parents = any(""yes"" in info[key].lower() for key in info)
+    
+    # Choose the answer based on the analysis
+    answer = possible_answers[0] if has_abusive_parents else possible_answers[1]
+    reason = ""The presence of abusive behavior and neglectful actions towards children in the frames indicates the relevance of the 'Abusive Parents' trope.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_5|Would Hurt a Child|"Is the trope ""Would Hurt a Child"", which means ""People that do hurt children, sometimes even kill them."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Would Hurt a Child
+    # Definition: People that do hurt children, sometimes even kill them.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify any instances where a child is in danger or harmed.
+    # 2. Character Analysis: Identify characters involved and their actions towards children.
+    # 3. Incident Analysis: Look for specific incidents or actions that indicate harm towards children.
+    # 4. Moral Evaluation: Determine the moral implications of the actions towards children.
+    # 5. Answer Selection: Use collected information to decide if the trope applies.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""child""):
+            harm_query = frame.simple_query(""Is the child in danger or being harmed?"", to_yesno=True)
+            if ""yes"" in harm_query.lower():
+                character_actions = frame.simple_query(""What actions are characters taking towards the child?"")
+                incident_description = frame.simple_query(""Describe the incident involving the child."")
+                moral_evaluation = frame.simple_query(""What are the moral implications of the actions?"")
+                info[f""Incident in frame {i}""] = incident_description
+                info[f""Character actions in frame {i}""] = character_actions
+                info[f""Moral evaluation in frame {i}""] = moral_evaluation
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_6|Action Girl|"Is the trope ""Action Girl"", which means ""An Action Girl is a female badass who is tough and kicks butt."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Action Girl
+    # Definition: An Action Girl is a female character who is tough, skilled in combat, and often takes on physically demanding roles traditionally reserved for male characters.
+    # Thought Process:
+    # 1. Frame Selection: Identify frames where female characters are engaged in action sequences or combat.
+    # 2. Character Analysis: Look for traits like physical strength, combat skills, and leadership qualities that define an Action Girl.
+    # 3. Action Sequences: Analyze scenes involving the female characters to determine if they exhibit traits of toughness and combat prowess.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Action Girl"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        female_characters = frame.find(""female character"")
+        for character in female_characters:
+            if character.exists(""action sequence"") or character.exists(""combat scene""):
+                character_traits = character.simple_query(""Describe the character traits."")
+                combat_skills = character.simple_query(""What combat skills are displayed?"")
+                info[f""Character traits in frame {i}""] = character_traits
+                info[f""Combat skills in frame {i}""] = combat_skills
+    
+    # Analyze the collected information to determine the relevance of the ""Action Girl"" trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_7|Reasonable Authority Figure|"Is the trope ""Reasonable Authority Figure"", which means ""Authirity that is open to heros' inasane ideas.  Often, they'll ask for proof and facts rather than follow baseless accusations, but even then, 
+they'll usually humor the heroes and go check out their theories."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Reasonable Authority Figure
+    # Definition: An authority figure who is open to heroes' insane ideas, often asking for proof and facts rather than following baseless accusations. They usually humor the heroes and investigate their theories.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify the presence of an authority figure interacting with heroes and their ideas.
+    # 2. Character Analysis: Look for traits of openness, willingness to listen, and rationality in the authority figure's behavior.
+    # 3. Interaction Analysis: Observe how the authority figure responds to the heroes' ideas and whether they show trust or skepticism.
+    # 4. Answer Selection: Use the collected information to determine if the ""Reasonable Authority Figure"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect the presence of an authority figure
+        if frame.exists(""authority figure""):
+            # Analyze the authority figure's behavior and traits
+            openness_trait = frame.simple_query(""Is the authority figure open to new ideas?"", to_yesno=True)
+            rationality_trait = frame.simple_query(""Does the authority figure ask for proof and facts?"", to_yesno=True)
+            # Store the collected information
+            info[f""Openness of authority figure in frame {i}""] = openness_trait
+            info[f""Rationality of authority figure in frame {i}""] = rationality_trait
+    
+    # Determine if the ""Reasonable Authority Figure"" trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_8|Papa Wolf|"Is the trope ""Papa Wolf"", which means ""Paternal instinct can transform a Bumbling Dad into an Action Dad. If someone threatens his kids they will soon wish 
+they'd never come within a mile of them."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Papa Wolf
+    # Definition: Paternal instinct can transform a Bumbling Dad into an Action Dad. If someone threatens his kids they will soon wish they'd never come within a mile of them.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a paternal figure displays protective instincts towards their children.
+    # 2. Character Analysis: Look for character traits and actions that demonstrate the transformation from a passive father to a fierce protector.
+    # 3. Threat Assessment: Identify situations where the children are in danger and the father figure responds with aggression or protection.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Papa Wolf"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""father"") and frame.exists(""children""):
+            protective_response = frame.simple_query(""Is the father protecting the children?"", to_yesno=True)
+            if ""yes"" in protective_response.lower():
+                character_traits = frame.simple_query(""Describe the father's transformation and protective actions."")
+                threat_situation = frame.simple_query(""What danger are the children facing and how does the father respond?"")
+                info[f""Protective response in frame {i}""] = protective_response
+                info[f""Character traits in frame {i}""] = character_traits
+                info[f""Threat situation in frame {i}""] = threat_situation
+    
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_9|Deadpan Snarker|"Is the trope ""Deadpan Snarker"", which means ""A character prone to gnomic, sarcastic, sometimes bitter, occasionally whimsical asides."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Deadpan Snarker
+    # Definition: A character prone to gnomic, sarcastic, sometimes bitter, occasionally whimsical asides.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify characters exhibiting deadpan snarker traits.
+    # 2. Character Analysis: Look for characters making sarcastic or witty remarks, often with a deadpan delivery.
+    # 3. Dialogue Examination: Focus on dialogues for dry humor, sarcasm, or cynical comments.
+    # 4. Answer Selection: Use collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        characters = frame.find(""person"")
+        for character in characters:
+            sarcasm_query = character.simple_query(""Is the character making sarcastic remarks?"", to_yesno=True)
+            wit_query = character.simple_query(""Is the character displaying witty behavior?"", to_yesno=True)
+            if ""yes"" in sarcasm_query.lower() or ""yes"" in wit_query.lower():
+                character_description = character.simple_query(""Describe the character's demeanor and dialogues."")
+                info[f""Character {i} exhibiting Deadpan Snarker traits""] = character_description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_10|Determinator|"Is the trope ""Determinator"", which means ""A character \ good or evil, male or female, young or old \ who never gives up. Ever. No matter what."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Determinator
+    # Definition: A character who never gives up, no matter the obstacles.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify a character exhibiting traits of determination.
+    # 2. Character Analysis: Look for visual cues such as perseverance, resilience, and unwavering resolve.
+    # 3. Event Analysis: Identify key moments where the character faces challenges but continues to push forward.
+    # 4. Answer Selection: Use the collected information to determine if the ""Determinator"" trope is relevant to the character in the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect visual cues of determination in characters
+        determination_query = frame.simple_query(""Is there a character showing determination?"", to_yesno=True)
+        if ""yes"" in determination_query.lower():
+            character_description = frame.simple_query(""Describe the determined character."")
+            determination_event = frame.simple_query(""What event shows the character's determination?"")
+            info[f""Determined character in frame {i}""] = character_description
+            info[f""Determination event in frame {i}""] = determination_event
+
+    # Analyze the collected information to determine if the ""Determinator"" trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_11|Only Sane Man|"Is the trope ""Only Sane Man"", which means ""When there is a group of characters who are all just totally weird, either in general or in a particular scenario, the Only Sane Man is the only 
+one who, well, isn't."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Only Sane Man
+    # Definition: In a group of characters where all others are eccentric, odd, or crazy, the Only Sane Man is the one who remains rational, logical, or normal in comparison.
+    # Thought Process:
+    # 1. Frame Selection: Identify the characters in the video and analyze their behaviors to determine if there is a stark contrast in sanity levels.
+    # 2. Character Analysis: Look for signs of eccentricity, oddity, or craziness in the majority of characters to highlight the one who stands out as the Only Sane Man.
+    # 3. Sanity Check: Evaluate the actions, dialogues, and interactions of each character to ascertain the presence of the trope.
+    # 4. Answer Selection: Utilize the collected information to decide whether the trope applies to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    sane_character_count = 0
+    total_character_count = 0
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        characters = frame.find(""person"")
+        total_character_count += len(characters)
+
+        for character in characters:
+            traits = character.simple_query(""Describe the character's behavior and traits."")
+            if ""eccentric"" in traits or ""odd"" in traits or ""crazy"" in traits:
+                sane_character_count += 1
+
+    if total_character_count > 0:
+        sanity_ratio = sane_character_count / total_character_count
+        if sanity_ratio < 0.1:  # Assuming a very low ratio indicates the presence of the Only Sane Man trope
+            answer = ""yes""
+            reason = ""The majority of characters exhibit eccentric or odd behaviors, highlighting the presence of the Only Sane Man.""
+        else:
+            answer = ""no""
+            reason = ""The characters do not display a significant contrast in sanity levels to suggest the Only Sane Man trope.""
+
+    else:
+        answer = ""no""
+        reason = ""No characters found in the video.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_12|Anti-Hero|"Is the trope ""Anti-Hero"", which means ""An antihero is a protagonist who has the opposite of most of the traditional attributes of a hero."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Anti-Hero
+    # Definition: An antihero is a protagonist who has the opposite of most of the traditional attributes of a hero.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the characters in the video to identify the protagonist and their characteristics.
+    # 2. Character Analysis: Look for traits that deviate from traditional hero attributes, such as moral ambiguity, unconventional methods, or selfish motives.
+    # 3. Narrative Examination: Consider the actions and decisions of the protagonist throughout the video to determine if they align with the anti-hero trope.
+    # 4. Answer Selection: Use the collected information to decide if the anti-hero trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        characters = frame.find(""person"")
+        for character in characters:
+            traits = character.simple_query(""Describe the character's traits and actions."")
+            moral_ambiguity = character.simple_query(""Is the character morally ambiguous?"", to_yesno=True)
+            info[f""Character {i} traits""] = traits
+            info[f""Character {i} moral ambiguity""] = moral_ambiguity
+
+    # Analyze the collected information to determine if the anti-hero trope is relevant
+    has_anti_hero = any(""morally ambiguous"" in info[trait] for trait in info if ""traits"" in trait)
+    answer = ""yes"" if has_anti_hero else ""no""
+    reason = ""The presence of morally ambiguous characters aligns with the anti-hero trope.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_13|Asshole Victim|"Is the trope ""Asshole Victim"", which means ""When the victim is a bad guy."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Asshole Victim
+    # Definition: A narrative trope where the victim of a crime or misdeed is someone who had it coming because they were themselves morally dubious or outright villainous.
+    # Thought Process:
+    # 1. Frame Selection: This trope involves identifying both the 'victim' and the act leading to their victimhood, suggesting a need for comprehensive analysis throughout the video.
+    # 2. Character Analysis: Identify the 'victim' character and analyze their actions or character traits that justify the trope's criteria.
+    # 3. Incident Analysis: Look for an incident within the video that cements the character's role as a victim.
+    # 4. Morality Check: Determine if there's a narrative or visual cue indicating the victim's negative moral standing.
+    # 5. Answer Selection: Using the collected data, decide whether the ""Asshole Victim"" trope is present.
+    
+    video_segment = VideoSegment(video, annotation)
+    # Initialize a dictionary to store information collected during analysis
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Assume function exists to identify characters and incidents
+        if frame.exists(""person""):
+            incident_description = frame.simple_query(""Describe the incident happened in the image."")
+            info[f""Character trait in {i}th frame""] = []
+            info[f""Morality check in {i}th frame""] = []
+            for person in frame.find(""person""):
+                # Analyze the character's actions or traits
+                person_trait = person.simple_query(""What is the person doing? What are his/her traits?"")
+                morality_query = frame.simple_query(""Does the he/she show negative moral traits?"", to_yesno=True)
+                # Store the collected information
+                info[f""Character trait in {i}th frame""].append(person_trait)
+                info[f""Morality check in {i}th frame""].append(morality_query)
+            info[f""Incident description in {i}th frame""] = incident_description
+    
+    # After collecting information, use it to determine the presence of the trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_14|Jerk with a Heart of Gold|"Is the trope ""Jerk with a Heart of Gold"", which means ""A person you would expect to be a big Jerkass has some redeeming qualities behind their tough demeanor."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Jerk with a Heart of Gold
+    # Definition: A person you would expect to be a big Jerkass has some redeeming qualities behind their tough demeanor.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify a character who initially appears as a jerk but shows signs of kindness or positive traits.
+    # 2. Character Analysis: Look for instances where the character's actions or expressions contradict their initial portrayal.
+    # 3. Redemption Arc: Identify moments where the character's tough exterior softens, revealing their underlying good nature.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""jerk""):
+            kind_query = frame.simple_query(""Does the jerk show any kindness or positive traits?"", to_yesno=True)
+            if ""yes"" in kind_query.lower():
+                character_analysis = frame.simple_query(""Describe the character's actions that show kindness."")
+                info[f""Character analysis in frame {i}""] = character_analysis
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_15|Even Evil Has Standards|"Is the trope ""Even Evil Has Standards"", which means ""Keep a villain safely on the ""still sympathetic"" side of the Moral Event Horizon; give him something that he simply will not do."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Even Evil Has Standards
+    # Definition: A trope where a villain, despite their evil nature, has certain principles or lines they will not cross, indicating a level of morality or honor.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify the villainous character and their actions.
+    # 2. Moral Evaluation: Look for instances where the villain displays reluctance or refuses to commit certain acts.
+    # 3. Standard Identification: Identify the specific standards or lines the villain adheres to, showcasing their complexity.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the character in the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect the presence of a villainous character
+        if frame.exists(""villain""):
+            # Check for indications of moral standards or lines they won't cross
+            moral_standards = frame.simple_query(""Does the villain show any moral standards or lines they won't cross?"", to_yesno=True)
+            if ""yes"" in moral_standards.lower():
+                # Gather more details about the standards
+                standards_description = frame.simple_query(""What specific standards or lines does the villain adhere to?"")
+                info[f""Standards of the villain in frame {i}""] = standards_description
+
+    # Analyze the collected information to determine if the trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_16|Affably Evil|"Is the trope ""Affably Evil"", which means ""Villains that are not too bad. There is absolutely nothing separating them from being normal, polite people except for the fact that they want 
+to take over the world."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Affably Evil
+    # Definition: Villains that are not too bad. There is absolutely nothing separating them from being normal, polite people except for the fact that they want to take over the world.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify characters that exhibit traits of being affably evil.
+    # 2. Character Analysis: Look for villains who display polite behavior or charm despite their evil intentions.
+    # 3. Villainous Actions: Identify actions or dialogues that reveal their true malevolent nature.
+    # 4. Answer Selection: Use the collected information to determine if the ""Affably Evil"" trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect characters who might fit the ""Affably Evil"" trope
+        villains = frame.find(""villain"")
+        for villain in villains:
+            politeness_level = villain.simple_query(""How polite is the character?"")
+            evil_intent = villain.simple_query(""What are the character's intentions?"")
+            if ""polite"" in politeness_level.lower() and ""evil"" in evil_intent.lower():
+                info[f""Potential Affably Evil Character in Frame {i}""] = villain.get_subtitles()
+    
+    # Analyze the collected information to determine if the trope is relevant
+    if len(info) > 0:
+        answer = ""yes""
+        reason = ""Characters displaying polite behavior with evil intentions were identified.""
+    else:
+        answer = ""no""
+        reason = ""No characters fitting the 'Affably Evil' trope were found.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_17|Too Dumb to Live|"Is the trope ""Too Dumb to Live"", which means ""People who are so stupid that they simply do not deserve to survive."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Too Dumb to Live
+    # Definition: People who are so stupid that they simply do not deserve to survive.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify characters or situations that exhibit extreme stupidity or lack of survival instincts.
+    # 2. Character Analysis: Look for characters making irrational decisions or putting themselves in dangerous situations due to their stupidity.
+    # 3. Survival Instinct Check: Determine if the characters' actions or behaviors indicate a lack of basic survival instincts.
+    # 4. Answer Selection: Based on the collected information, decide whether the ""Too Dumb to Live"" trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    # Initialize an info dictionary to store relevant information
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze each frame for signs of extreme stupidity or lack of survival instincts
+        stupidity_query = frame.simple_query(""Do any characters exhibit extreme stupidity or lack of survival instincts?"", to_yesno=True)
+        if ""yes"" in stupidity_query.lower():
+            # Collect additional information about the character's actions or behaviors
+            character_actions = frame.simple_query(""Describe the character's actions indicating extreme stupidity."")
+            survival_instinct_check = frame.simple_query(""Do the characters lack basic survival instincts?"", to_yesno=True)
+            # Store the collected information in the info dictionary
+            info[f""Character actions in frame {i}""] = character_actions
+            info[f""Survival instinct check in frame {i}""] = survival_instinct_check
+
+    # Use the select_answer API to determine the most probable answer based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_18|Butt-Monkey|"Is the trope ""Butt-Monkey"", which means ""The character who is always the butt of the demeaning joke or the ""put them through hell"" plotline."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Butt-Monkey
+    # Definition: The character who is always the butt of the demeaning joke or the ""put them through hell"" plotline.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify the character who is consistently subjected to demeaning situations or jokes.
+    # 2. Character Analysis: Look for patterns where a specific character is repeatedly put in unfortunate or humiliating circumstances.
+    # 3. Plotline Examination: Examine the plot development to identify if there is a character who consistently faces hardships or is the target of jokes.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Butt-Monkey"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Identify characters who are subjected to demeaning situations
+        characters = frame.find(""person"")
+        for character in characters:
+            demeaning_situation = character.simple_query(""Is the character in a demeaning situation?"", to_yesno=True)
+            if ""yes"" in demeaning_situation.lower():
+                character_name = character.simple_query(""What is the name of the character?"")
+                info[f""Demeaning situation for {character_name} in frame {i}""] = True
+
+    # Analyze the collected information to determine if the trope is relevant
+    has_butt_monkey = any(value for value in info.values())
+    answer = bool_to_yesno(has_butt_monkey)
+    reason = ""The character(s) in the movie are consistently subjected to demeaning situations.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_19|Ax-Crazy|"Is the trope ""Ax-Crazy"", which means ""An ""ax-crazy"" character is someone who is psychologically unstable and presents a clear and immediate danger to others."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Ax-Crazy
+    # Definition: An ""ax-crazy"" character is someone who is psychologically unstable and presents a clear and immediate danger to others.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify characters displaying signs of psychological instability and posing a threat to others.
+    # 2. Character Analysis: Look for aggressive behavior, violent actions, or erratic movements that indicate a lack of control and potential danger.
+    # 3. Threat Assessment: Determine if the character's actions pose a direct danger to other characters or the overall narrative.
+    # 4. Answer Selection: Use the collected information to decide if the ""Ax-Crazy"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect signs of psychological instability and danger in characters
+        unstable_characters = frame.find(""unstable"")
+        dangerous_characters = frame.find(""dangerous"")
+        
+        if unstable_characters and dangerous_characters:
+            # Analyze the behavior of unstable and dangerous characters
+            for character in unstable_characters:
+                behavior = character.simple_query(""Describe the behavior of this character."")
+                info[f""Unstable behavior in frame {i}""] = behavior
+                
+            for character in dangerous_characters:
+                threat_level = character.simple_query(""How much of a threat does this character pose?"")
+                info[f""Danger level in frame {i}""] = threat_level
+    
+    # Assess the presence of the ""Ax-Crazy"" trope based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_20|Adorkable|"Is the trope ""Adorkable"", which means ""An adorkable character might be socially inept, shy or clumsy. However, rather than making them an outcast, these quirks give the character 
+an endearing vulnerability."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Adorkable
+    # Definition: An adorkable character might be socially inept, shy, or clumsy. However, rather than making them an outcast, these quirks give the character an endearing vulnerability.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify characters exhibiting adorkable traits.
+    # 2. Character Analysis: Look for social ineptitude, shyness, or clumsiness in characters and assess how these traits contribute to their adorkable nature.
+    # 3. Emotional Impact: Evaluate how these quirks make the character endearing and relatable to the audience.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Adorkable"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        adorkable_characters = frame.find(""adorkable character"")
+        for character in adorkable_characters:
+            character_traits = character.simple_query(""Describe the character's traits that make them adorkable."")
+            info[f""Adorkable traits in character at frame {i}""] = character_traits
+    
+    # Analyze the collected information to determine the relevance of the ""Adorkable"" trope
+    adorkable_present = any(""shy"" in info[trait] or ""clumsy"" in info[trait] or ""socially inept"" in info[trait] for trait in info)
+    
+    if adorkable_present:
+        answer = ""yes""
+        reason = ""Multiple characters exhibit traits that align with the adorkable trope.""
+    else:
+        answer = ""no""
+        reason = ""No characters display significant adorkable traits in the movie.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_21|Berserk Button|"Is the trope ""Berserk Button"", which means ""Some characters always get enraged when given a certain, minor trigger."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Berserk Button
+    # Definition: Some characters always get enraged when given a certain, minor trigger.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where characters exhibit extreme anger due to specific triggers.
+    # 2. Trigger Identification: Look for recurring triggers that consistently lead to character outbursts.
+    # 3. Emotional Analysis: Assess the intensity and frequency of enraged reactions to determine if the trope is applicable.
+    # 4. Answer Selection: Use the collected information to decide if the ""Berserk Button"" trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""character""):
+            trigger_query = frame.simple_query(""Is there a specific trigger causing extreme anger?"")
+            if ""yes"" in trigger_query.lower():
+                trigger_description = frame.simple_query(""Describe the trigger and character's reaction."")
+                info[f""Trigger in frame {i}""] = trigger_description
+
+    # Analyze the collected information to determine if the ""Berserk Button"" trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_22|Ms. Fanservice|"Is the trope ""Ms. Fanservice"", which means ""A female character who provides a significant amount of Fanservice (generally for males), ranging from simple revealing of cleavage, midriff, 
+shoulders or legs, to shots of her curves, hips or derriere (even when covered)."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Ms. Fanservice
+    # Definition: A female character who provides a significant amount of Fanservice (generally for males), ranging from simple revealing of cleavage, midriff, shoulders or legs, to shots of her curves, hips or derriere (even when covered).
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify the presence of female characters and their portrayal in terms of fanservice.
+    # 2. Fanservice Analysis: Look for visual cues such as revealing clothing, suggestive poses, or camera angles that emphasize certain body parts.
+    # 3. Character Portrayal: Assess how the female characters are presented in the video, focusing on objectification or sexualization.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope ""Ms. Fanservice"" is relevant to the movie based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        female_characters = frame.find(""female character"")
+        for character in female_characters:
+            fanservice_level = character.simple_query(""Rate the fanservice level of this character from 1 to 10"")
+            if fanservice_level >= 7:
+                fanservice_description = character.simple_query(""Describe the fanservice elements in this character"")
+                info[f""Fanservice in {i}th frame""] = fanservice_description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_23|The Alcoholic|"Is the trope ""The Alcoholic"", which means ""This person likes their liquor, and in large amounts."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: The Alcoholic
+    # Definition: This person likes their liquor, and in large amounts.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances of alcohol consumption or signs of alcoholism.
+    # 2. Behavioral Analysis: Look for behaviors associated with excessive drinking, such as frequent consumption, dependency, or visible effects of alcohol.
+    # 3. Contextual Cues: Consider the setting, interactions, and any narrative elements that suggest a character's relationship with alcohol.
+    # 4. Answer Selection: Use the collected information to determine if the ""The Alcoholic"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect signs of alcohol consumption or alcoholism
+        alcohol_query = frame.simple_query(""Is there any alcohol consumption or signs of alcoholism in the scene?"", to_yesno=True)
+        
+        if ""yes"" in alcohol_query.lower():
+            # Gather more details about the alcohol-related content
+            alcohol_description = frame.simple_query(""Describe the alcohol-related content in the scene."")
+            info[f""Alcohol content in frame {i}""] = alcohol_description
+    
+    # Analyze the collected information to determine the relevance of ""The Alcoholic"" trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_24|Disappeared Dad|"Is the trope ""Disappeared Dad"", which means ""The father of a character or characters is missing or absent."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Disappeared Dad
+    # Definition: The father of a character or characters is missing or absent.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify characters and their relationships, specifically focusing on the absence of fathers.
+    # 2. Character Analysis: Look for visual cues or dialogues that indicate the absence of a father figure in the story.
+    # 3. Absence Detection: Detect instances where characters mention or show signs of missing fathers.
+    # 4. Answer Selection: Use the collected information to determine if the ""Disappeared Dad"" trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Identify characters and their relationships
+        characters = frame.find(""person"")
+        
+        for character in characters:
+            if ""father"" in character.simple_query(""Describe the relationship with your father. Is he present?"", to_yesno=True).lower():
+                info[f""Father presence in frame {i}""] = ""Present""
+            else:
+                info[f""Father presence in frame {i}""] = ""Absent""
+    
+    # Check if the ""Disappeared Dad"" trope is relevant based on the collected information
+    has_disappeared_dad = any(""Absent"" in value for value in info.values())
+    
+    answer = possible_answers[0] if has_disappeared_dad else possible_answers[1]
+    reason = ""The presence of missing or absent fathers in the frames indicates the relevance of the 'Disappeared Dad' trope.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_25|Would Hit a Girl|"Is the trope ""Would Hit a Girl"", which means ""A guy (good or evil) has no problems with violence against women."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Would Hit a Girl
+    # Definition: A guy (good or evil) has no problems with violence against women.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances of violence against women.
+    # 2. Character Analysis: Identify the characters involved in the violent acts and their moral alignment.
+    # 3. Violence Detection: Look for visual cues indicating violence against women.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""woman""):
+            violence_query = frame.simple_query(""Is there violence against women in the scene?"", to_yesno=True)
+            if ""yes"" in violence_query.lower():
+                character_traits = frame.simple_query(""Describe the characters involved in the violence."")
+                info[f""Violence against women in frame {i}""] = character_traits
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_26|Oh, Crap!|"Is the trope ""Oh, Crap!"", which means ""The moment at which a character realizes that something really, REALLY bad is about to happen."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Oh, Crap!
+    # Definition: The moment at which a character realizes that something really, REALLY bad is about to happen.
+    # Thought Process:
+    # 1. Frame Selection: Iterate through each frame to find the ""Oh, Crap!"" moment.
+    # 2. Emotional and Contextual Analysis: Look for visual and contextual cues indicating imminent danger or realization.
+    # 3. Answer Selection: Use select_answer API to choose the most likely answer based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect the ""Oh, Crap!"" moment in the frame
+        realization_query = frame.simple_query(""Does any character show signs of realization or imminent danger?"", to_yesno=True)
+
+        if ""yes"" in realization_query.lower():
+            # Capture additional details about the moment
+            caption = frame.simple_query(""What is happening in the scene that indicates imminent danger?"")
+            info[f""'Oh, Crap!' moment in frame {i}""] = caption
+
+    # Answer the query based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_27|Driven to Suicide|"Is the trope ""Driven to Suicide"", which means ""Whatever the reason, a character may be driven to commit suicide."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Driven to Suicide
+    # Definition: A character may be driven to commit suicide due to various reasons.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify any character exhibiting signs of distress or suicidal behavior.
+    # 2. Behavioral Analysis: Look for behavioral cues such as isolation, despair, or self-harm.
+    # 3. Contextual Examination: Consider the narrative context and character development leading to the potential suicide.
+    # 4. Answer Determination: Use collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""character""):
+            suicidal_behavior = frame.simple_query(""Is the character exhibiting signs of distress or suicidal behavior?"", to_yesno=True)
+            if ""yes"" in suicidal_behavior.lower():
+                context = frame.simple_query(""Describe the narrative context and character development leading to the behavior."")
+                info[f""Suicidal behavior detected in frame {i}""] = context
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_28|Adult Fear|"Is the trope ""Adult Fear"", which means ""Things that mature, well-adjusted adults generally are concerned about, as opposed to supernatural fears."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Adult Fear
+    # Definition: Things that mature, well-adjusted adults generally are concerned about, as opposed to supernatural fears.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify situations that evoke concerns typical of mature adults.
+    # 2. Fear Analysis: Look for scenarios related to responsibilities, relationships, or societal issues that resonate with adult fears.
+    # 3. Relevance Check: Determine if the identified themes align with the concept of ""Adult Fear"" in the movie.
+    # 4. Answer Selection: Use select_answer API to choose the most appropriate answer based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze frames for elements evoking adult concerns
+        adult_fear_query = frame.simple_query(""Does this scene depict mature adult concerns?"", to_yesno=True)
+        if ""yes"" in adult_fear_query.lower():
+            scene_description = frame.simple_query(""Describe the scene evoking adult fears."")
+            info[f""Adult Fear Scene in Frame {i}""] = scene_description
+
+    # Check if the concept of ""Adult Fear"" is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_29|Not So Different|"Is the trope ""Not So Different"", which means ""When one character in a pair (who'd otherwise be different and/or unrelated) discovers that they actually have some things in common, more 
+than the other character would want to believe."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Not So Different
+    # Definition: When one character in a pair (who'd otherwise be different and/or unrelated) discovers that they actually have some things in common, more than the other character would want to believe.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify pairs of characters who seem different but might have similarities.
+    # 2. Character Analysis: Look for instances where characters show common traits, behaviors, or experiences that reveal they are not as different as initially thought.
+    # 3. Interaction Observation: Focus on interactions between characters that highlight shared characteristics or experiences.
+    # 4. Answer Selection: Use the collected information to determine if the ""Not So Different"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Identify pairs of characters who seem different
+        characters = frame.find(""person"")
+        if len(characters) >= 2:
+            # Analyze the characters for similarities
+            common_traits = []
+            for character in characters:
+                traits = character.simple_query(""What traits does this character have?"")
+                common_traits.append(traits)
+            info[f""Common traits in frame {i}""] = common_traits
+            
+            # Check for interactions that reveal shared experiences
+            interactions = frame.simple_query(""Are there interactions that suggest shared experiences?"", to_yesno=True)
+            info[f""Interactions in frame {i}""] = interactions
+    
+    # Determine if the ""Not So Different"" trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_30|Heroic BSoD|"Is the trope ""Heroic BSoD"", which means ""A stunning revelation or horrible event affects a character or someone they care deeply about, leaving them shocked to the point of mentally
+ shutting down for a while."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Heroic BSoD
+    # Definition: A stunning revelation or horrible event affects a character or someone they care deeply about, leaving them shocked to the point of mentally shutting down for a while.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify a moment of significant revelation or a horrible event that could lead to a mental shutdown.
+    # 2. Emotional Impact Analysis: Look for visual cues indicating shock, mental distress, or shutdown in response to the event.
+    # 3. Character Reaction: Observe the character's behavior and expressions to determine if they exhibit signs of a mental shutdown.
+    # 4. Answer Selection: Use the collected information to decide if the trope ""Heroic BSoD"" is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting a moment of stunning revelation or a horrible event
+        revelation_query = frame.simple_query(""Is there a stunning revelation or a horrible event in this frame?"", to_yesno=True)
+        if ""yes"" in revelation_query.lower():
+            # Analyze emotional impact and character reactions
+            emotional_cues = frame.simple_query(""Are there visual cues of shock or mental distress?"", to_yesno=True)
+            if ""yes"" in emotional_cues.lower():
+                character_behavior = frame.simple_query(""How is the character reacting to the event?"")
+                info[f""Revelation in frame {i}""] = ""Stunning revelation or horrible event detected.""
+                info[f""Emotional impact in frame {i}""] = emotional_cues
+                info[f""Character reaction in frame {i}""] = character_behavior
+
+    # Determine if the trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_31|"Big \""NO!\"""|"Is the trope ""Big \""NO!\"""", which means ""The moment when a character realizes that something awful has happened, or notices that something awful is about to happen, and screams 
+""NOOOOOOOOOOOOOOO!"" "", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Big ""NO!""
+    # Definition: The moment when a character realizes that something awful has happened, or notices that something awful is about to happen, and screams ""NOOOOOOOOOOOOOOO!""
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for emotional cues that might indicate a character's realization of a terrible event.
+    # 2. Emotional Analysis: Look for frames where a character's expression or actions suggest a moment of shock or despair.
+    # 3. Vocal Expression: Detect frames where a character might be screaming ""NO!"" in response to the event.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope is relevant based on the collected emotional and vocal cues.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Look for emotional cues indicating a character's realization of a terrible event
+        emotional_response = frame.simple_query(""Do the characters show signs of shock or despair?"", to_yesno=True)
+        if ""yes"" in emotional_response.lower():
+            # Check for vocal expression of ""NO!""
+            vocal_expression = frame.simple_query(""Is there a character screaming 'NO!'?"", to_yesno=True)
+            if ""yes"" in vocal_expression.lower():
+                # Capture the frame details
+                frame_description = frame.simple_query(""Describe the scene where the character screams 'NO!'"")
+                info[f""Frame {i} Description""] = frame_description
+
+    # Determine if the ""Big 'NO!'"" trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_32|Eye Scream|"Is the trope ""Eye Scream"", which means ""When the creator of a work takes advantage of our Primal Fear of having something utterly horrible happen to our eyes, usually involving the 
+invasion of the eye sockets by a foreign body."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Eye Scream
+    # Definition: When the creator of a work takes advantage of our Primal Fear of having something utterly horrible happen to our eyes, usually involving the invasion of the eye sockets by a foreign body.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for potential instances of eye-related horror or invasion.
+    # 2. Visual Analysis: Look for visual cues or elements that suggest eye-related trauma or invasion.
+    # 3. Narrative Context: Consider the narrative context and character reactions to determine the impact of the eye-related scenes.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope ""Eye Scream"" is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""eye"") and frame.exists(""horror""):
+            eye_scream_description = frame.simple_query(""Describe the eye-related horror scene."")
+            info[f""Eye Scream scene in frame {i}""] = eye_scream_description
+
+    # Analyze the collected information to determine the relevance of the ""Eye Scream"" trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_33|Gory Discretion Shot|"Is the trope ""Gory Discretion Shot"", which means ""Blood or brains are seen splattering against a wall and the rest is left to the imagination."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Gory Discretion Shot
+    # Definition: A narrative technique where a violent or gory scene is not explicitly shown on screen, but instead implied or left to the viewer's imagination.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames for potential violent or gory scenes that might be candidates for a Gory Discretion Shot.
+    # 2. Scene Analysis: Look for visual cues or context that suggest a violent event without showing explicit gore.
+    # 3. Trope Identification: Determine if the video uses the technique of implying violent scenes rather than showing them directly.
+    # 4. Answer Selection: Use the select_answer API to decide if the trope is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for visual cues of violence or gore
+        has_violent_scene = frame.simple_query(""Is there a violent or gory scene?"", to_yesno=True)
+        if ""yes"" in has_violent_scene.lower():
+            # Analyze the scene for implications of violence
+            scene_description = frame.simple_query(""Describe the scene implying violence or gore."")
+            info[f""Violent scene in frame {i}""] = scene_description
+
+    # Determine if the trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_34|Impaled with Extreme Prejudice|"Is the trope ""Impaled with Extreme Prejudice"", which means "" When someone gets stabbed in a really extreme way.."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Impaled with Extreme Prejudice
+    # Definition: When someone gets stabbed in a really extreme way.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances of extreme violence involving stabbing or impaling.
+    # 2. Violence Detection: Look for visual cues such as weapons, blood, or intense physical harm that indicate extreme violence.
+    # 3. Answer Selection: Use the select_answer API to determine if the trope is relevant based on the detected violent scenes.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""weapon"") and frame.exists(""blood""):
+            violence_level = frame.simple_query(""Is there extreme violence like stabbing or impaling?"", to_yesno=True)
+            if ""yes"" in violence_level.lower():
+                description = frame.simple_query(""Describe the extreme violence scene in detail."")
+                info[f""Extreme violence in frame {i}""] = description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_35|Off with His Head!|"Is the trope ""Off with His Head!"", which means ""When someone is going to get his head chopped off."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Off with His Head!
+    # Definition: When someone is going to get his head chopped off.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to find scenes where a character's head is in danger of being chopped off.
+    # 2. Contextual Analysis: Look for visual cues or actions that suggest imminent decapitation.
+    # 3. Trope Detection: Identify specific instances where the trope is likely to occur based on visual and narrative elements.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for visual cues or actions that suggest decapitation
+        head_chopping_event = frame.llm_query(""Is there any scene where someone's head is in danger of being chopped off?"", to_yesno=True)
+        if ""yes"" in head_chopping_event.lower():
+            # Collect information about the scene
+            scene_description = frame.simple_query(""Describe the scene where the head chopping event is happening."")
+            info[f""Head chopping event in frame {i}""] = scene_description
+
+    # Analyze the collected information to determine if the trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_36|Disney Villain Death|"Is the trope ""Disney Villain Death"", which means ""Villains exit the film by falling off or out of things."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Disney Villain Death
+    # Definition: Villains exit the film by falling off or out of things.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify potential instances of villains falling off or out of things.
+    # 2. Villain Identification: Detect and track the presence of villainous characters in the video segment.
+    # 3. Falling Event Detection: Look for visual cues indicating falling or exiting the scene in a dramatic way.
+    # 4. Answer Selection: Use the collected information to determine if the ""Disney Villain Death"" trope is present in the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Identify villainous characters in the frame
+        villains = frame.find(""villain"")
+        for villain in villains:
+            # Check for falling or exiting events related to the villain
+            falling_event = villain.simple_query(""Is the villain falling off or out of something?"", to_yesno=True)
+            if ""yes"" in falling_event.lower():
+                # Capture additional details about the falling event
+                event_description = villain.simple_query(""Describe the falling event in detail."")
+                info[f""Falling event for villain in frame {i}""] = event_description
+
+    # Determine if the ""Disney Villain Death"" trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_37|Your Cheating Heart|"Is the trope ""Your Cheating Heart"", which means ""Cheating on your partner."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Your Cheating Heart
+    # Definition: A trope where a character is involved in infidelity or cheating on their partner.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify potential instances of infidelity or cheating behavior.
+    # 2. Character Behavior Analysis: Look for visual cues or actions that suggest cheating or infidelity.
+    # 3. Relationship Context: Consider the relationship dynamics and interactions between characters to determine if cheating is occurring.
+    # 4. Answer Selection: Use the collected information to decide if the ""Your Cheating Heart"" trope is relevant to the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting potential cheating behavior or infidelity
+        cheating_behavior = frame.simple_query(""Is there any behavior suggesting infidelity or cheating?"", to_yesno=True)
+        if ""yes"" in cheating_behavior.lower():
+            # Collect details about the suspected cheating behavior
+            behavior_description = frame.simple_query(""Describe the behavior suggesting infidelity."")
+            info[f""Cheating behavior in frame {i}""] = behavior_description
+
+    # Analyze the collected information to determine if the trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_38|"\""The Reason You Suck\"" Speech"|"Is the trope ""\""The Reason You Suck\"" Speech"", which means ""One character delivers a speech to another character on all the reasons why that other character sucks or is a horrible person."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: ""The Reason You Suck"" Speech
+    # Definition: One character delivers a speech to another character on all the reasons why that other character sucks or is a horrible person.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify a scene where a character is delivering a critical speech to another character.
+    # 2. Speech Analysis: Look for dialogues or monologues that contain criticisms or negative remarks about a character's behavior or personality.
+    # 3. Character Interaction: Observe the reactions and expressions of characters involved in the speech to gauge the impact and context of the scene.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""speech""):
+            speech_content = frame.simple_query(""What is the content of the speech?"")
+            criticized_character = frame.simple_query(""Who is being criticized in the speech?"")
+            info[f""Speech content in frame {i}""] = speech_content
+            info[f""Criticized character in frame {i}""] = criticized_character
+    
+    # Analyze the collected information to determine the relevance of the trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_39|Tempting Fate|"Is the trope ""Tempting Fate"", which means ""Tempting Fate is when a character says something that dares the universe into making things miserable for them, and the universe takes them up 
+on the challenge."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Tempting Fate
+    # Definition: Tempting Fate is when a character says something that dares the universe into making things miserable for them, and the universe takes them up on the challenge.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where characters make bold statements or challenges to fate.
+    # 2. Dialogue Analysis: Look for specific dialogue that can be interpreted as tempting fate or challenging the universe.
+    # 3. Event Observation: Identify subsequent events that may indicate the universe responding to the character's challenge.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Tempting Fate"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        dialogue = frame.simple_query(""What dialogue suggests tempting fate or challenging the universe?"")
+        if ""tempting fate"" in dialogue.lower() or ""challenge the universe"" in dialogue.lower():
+            subsequent_events = frame.simple_query(""What subsequent events occur after the dialogue?"")
+            info[f""Dialogue in frame {i}""] = dialogue
+            info[f""Subsequent events in frame {i}""] = subsequent_events
+    
+    # Analyze the collected information to determine the relevance of the trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_40|Disproportionate Retribution|"Is the trope ""Disproportionate Retribution"", which means ""the situation where a person let the opponent know that if they so much as sneeze on someone you protect, it will cost them a limb."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Disproportionate Retribution
+    # Definition: A situation where a person lets the opponent know that if they so much as sneeze on someone you protect, it will cost them a limb.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify instances of retribution or threats of severe consequences for minor actions.
+    # 2. Character Analysis: Look for characters who exhibit protective behavior and are willing to go to extreme lengths for retaliation.
+    # 3. Incident Analysis: Identify incidents where the threat of disproportionate retribution is made clear.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""protagonist"") and frame.exists(""opponent""):
+            retribution_threat = frame.simple_query(""Is there a threat of severe consequences for minor actions?"", to_yesno=True)
+            if ""yes"" in retribution_threat.lower():
+                incident_description = frame.simple_query(""Describe the incident where the threat is made."")
+                info[f""Incident with Disproportionate Retribution in frame {i}""] = incident_description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_41|Badass Boast|"Is the trope ""Badass Boast"", which means ""The character has got to be pretty impressive to be able to make this kind of boast convincingly, though sometimes a weaker character will 
+bluff like this."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Badass Boast
+    # Definition: A character makes an impressive or intimidating statement about their abilities or intentions, often to assert dominance or instill fear in others.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a character makes a bold or boastful statement.
+    # 2. Character Analysis: Look for traits or actions that support the character's ability to back up the boast convincingly.
+    # 3. Contextual Analysis: Consider the context of the boast and its impact on other characters or the narrative.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Badass Boast"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for character dialogues or actions that resemble a badass boast
+        boast_query = frame.simple_query(""Is there a badass boast in this scene?"", to_yesno=True)
+        
+        if ""yes"" in boast_query.lower():
+            character_name = frame.simple_query(""Which character made the boast?"")
+            boast_description = frame.simple_query(""What was the content of the boast?"")
+            info[f""Badass Boast in frame {i}""] = f""Character: {character_name}, Boast: {boast_description}""
+    
+    # Analyze the collected information to determine the relevance of the trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_42|Groin Attack|"Is the trope ""Groin Attack"", which means ""Groin attack"", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Groin Attack
+    # Definition: A physical attack to the groin area, often used for comedic effect or to incapacitate an opponent in action scenes.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances of physical attacks that target the groin area.
+    # 2. Attack Identification: Look for specific actions or movements that suggest a groin attack, such as sudden movements, reactions, or visual cues.
+    # 3. Contextual Analysis: Consider the context of the attack, including the characters involved, the tone of the scene, and any comedic or action-oriented elements.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope ""Groin Attack"" is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting potential groin attacks in the scene
+        groin_attack_query = frame.simple_query(""Is there a groin attack happening in this frame?"", to_yesno=True)
+        if ""yes"" in groin_attack_query.lower():
+            # Collect details about the groin attack
+            attack_description = frame.simple_query(""Describe the groin attack in detail."")
+            info[f""Groin Attack in frame {i}""] = attack_description
+
+    # Analyze the collected information to determine the relevance of the ""Groin Attack"" trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_43|Roaring Rampage of Revenge|"Is the trope ""Roaring Rampage of Revenge"", which means ""The Roaring Rampage of Revenge differs from the standard Revenge plot in that our hero dispenses with the Machiavellian plotting that would 
+define a classic revenge tale and goes straight for the bloodshed."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Roaring Rampage of Revenge
+    # Definition: The Roaring Rampage of Revenge differs from the standard Revenge plot in that our hero dispenses with the Machiavellian plotting that would define a classic revenge tale and goes straight for the bloodshed.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify instances of intense and direct acts of revenge without elaborate planning.
+    # 2. Revenge Analysis: Look for scenes where the protagonist engages in violent or aggressive actions driven by a desire for vengeance.
+    # 3. Bloodshed Detection: Identify sequences involving significant violence or destruction as a result of the protagonist's revenge.
+    # 4. Answer Selection: Utilize the collected information to determine if the trope ""Roaring Rampage of Revenge"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        revenge_query = frame.simple_query(""Is there a scene of intense revenge or retaliation?"", to_yesno=True)
+        bloodshed_query = frame.simple_query(""Is there significant bloodshed or violence in the scene?"", to_yesno=True)
+        
+        if ""yes"" in revenge_query.lower() and ""yes"" in bloodshed_query.lower():
+            revenge_description = frame.simple_query(""Describe the revenge scene in detail."")
+            bloodshed_description = frame.simple_query(""Describe the bloodshed or violence in the scene."")
+            info[f""Revenge scene in frame {i}""] = revenge_description
+            info[f""Bloodshed in frame {i}""] = bloodshed_description
+    
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_44|Big Damn Heroes|"Is the trope ""Big Damn Heroes"", which means ""Any time the heroes/anti heroes get to save the day in a big, awesome manner."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Big Damn Heroes
+    # Definition: Any time the heroes/anti-heroes get to save the day in a big, awesome manner.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify instances where the heroes or anti-heroes save the day in a significant and heroic manner.
+    # 2. Heroic Act Analysis: Look for heroic actions or moments where the characters exhibit bravery and save the day.
+    # 3. Trope Relevance: Determine if the identified scenes align with the essence of the ""Big Damn Heroes"" trope.
+    # 4. Answer Selection: Use the select_answer API to choose the most appropriate answer based on the analysis.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""hero"") or frame.exists(""anti-hero""):
+            heroic_moment = frame.simple_query(""Is this a heroic moment?"", to_yesno=True)
+            if ""yes"" in heroic_moment.lower():
+                caption = frame.simple_query(""Describe the heroic action."")
+                info[f""Heroic moment in frame {i}""] = caption
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_45|Heroic Sacrifice|"Is the trope ""Heroic Sacrifice"", which means ""A character saves another/others from harm and is killed, crippled, or maimed as a result."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Heroic Sacrifice
+    # Definition: A character saves another/others from harm and is killed, crippled, or maimed as a result.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a character is in a position to sacrifice themselves for others.
+    # 2. Character Actions: Look for actions that indicate a character is putting themselves in harm's way to protect others.
+    # 3. Sacrificial Act: Identify the moment where the sacrifice occurs, leading to the character's death, injury, or significant loss.
+    # 4. Trope Relevance: Determine if the identified actions and events align with the definition of a Heroic Sacrifice.
+    # 5. Answer Selection: Use the collected information to decide if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Look for visual cues of a character sacrificing themselves for others
+        sacrifice_query = frame.simple_query(""Is there a character sacrificing themselves for others?"", to_yesno=True)
+        if ""yes"" in sacrifice_query.lower():
+            # Gather details about the sacrifice event
+            sacrifice_description = frame.simple_query(""Describe the sacrifice event in detail."")
+            info[f""Sacrifice event in frame {i}""] = sacrifice_description
+
+    # Analyze the collected information to determine the relevance of the Heroic Sacrifice trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_46|Screw This, I'm Outta Here!|"Is the trope ""Screw This, I'm Outta Here!"", which means ""Screw you guys, I'm going home."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Screw This, I'm Outta Here!
+    # Definition: A character decides to leave a situation or group abruptly, often in a humorous or dramatic fashion.
+    # Thought Process:
+    # 1. Frame Selection: Identify frames where a character displays signs of frustration or dissatisfaction.
+    # 2. Character Behavior Analysis: Look for visual cues such as body language, facial expressions, or dialogue indicating a desire to leave.
+    # 3. Contextual Evaluation: Consider the context of the scene and the character's motivations for leaving.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""character""):
+            leave_query = frame.simple_query(""Is the character showing signs of leaving or frustration?"", to_yesno=True)
+            if ""yes"" in leave_query.lower():
+                context_description = frame.simple_query(""Describe the context of the scene leading to the character's decision to leave."")
+                info[f""Character leaving in frame {i}""] = context_description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_47|Kick the Dog|"Is the trope ""Kick the Dog"", which means ""When a character does something evil for no apparent gain, because the author wants to demonstrate that he's not a nice guy and shift 
+audience sympathy away from him."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Kick the Dog
+    # Definition: An act of cruelty by a character, typically towards a more vulnerable or defenseless entity, to establish the character's malevolence
+    # Thought: The trope detection involves four steps:
+    # 1. Context Information Collection: To observe the attacker's malevolence and the victim's defenseless entity, we need to concern action and event in adjacent frames and use them as context to understand the story
+    # 2. Event Observation: ""Kick the Dog"" would present in an attack event within a frame. Use the context from the first step as a condition and query more detail in advance    
+    # 3. Answer Selection: With information collected from the second step, we leave the reasoning and question answering to the select_answer API
+    video_segment = VideoSegment(video, annotation)
+    # Create an info dictionary, which would later pass to the select_answer API
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Understanding the current frame by simple_query
+        caption_query = ""What is happening in the scene? Please answer with at least 10 words""
+        caption = frame.simple_query(caption_query)
+        # Check if there is any potential attack event with llm_query
+        has_attack_event = frame.llm_query(f""Is there any potential attack event in the description '{caption}'?"", to_yesno=True)
+        if 'yes' in has_attack_event.lower():
+            # Query the event in detail
+            attack_event_query = ""What attack event is in the scene and what action and emotion does the attacker and victim have, please answer with at least 40 words""     
+            attack_event_description = frame.simple_query(attack_event_query)
+            info[f""Attack event in {i} th frame""] = attack_event_description
+    # Answer the query
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_48|Pet the Dog|"Is the trope ""Pet the Dog"", which means ""Show the nasty old crank petting a dog, and you show the audience, aw shucks, they're not that bad of a person after all."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Pet the Dog
+    # Definition: A narrative device where a character, typically portrayed as negative or villainous, is shown in a moment of kindness or vulnerability, humanizing them to the audience.
+    # Thought Process:
+    # 1. Frame Selection: Identify frames where the character in question is interacting with a dog or displaying a moment of kindness.
+    # 2. Character Analysis: Analyze the character's actions and behavior in the selected frames to determine if they align with the trope.
+    # 3. Emotional Impact: Consider the emotional impact of the scene on the audience and whether it serves to change their perception of the character.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Pet the Dog"" is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""dog""):
+            # Check if the character interacts with the dog
+            dog_interaction = frame.simple_query(""Is the character interacting with the dog?"", to_yesno=True)
+            if ""yes"" in dog_interaction.lower():
+                # Analyze the character's behavior
+                character_behavior = frame.simple_query(""Describe the character's behavior with the dog."")
+                info[f""Character behavior with dog in frame {i}""] = character_behavior
+
+    # Determine if the trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_49|Villainous Breakdown|"Is the trope ""Villainous Breakdown"", which means ""The tendency of relatively calm and composed villains to lose their cool over the course of the story."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Villainous Breakdown
+    # Definition: The tendency of relatively calm and composed villains to lose their cool over the course of the story.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify the villainous character and observe their behavior throughout the video.
+    # 2. Behavioral Analysis: Look for signs of composure loss, agitation, or emotional breakdown in the villain's actions and expressions.
+    # 3. Narrative Context: Consider how the villain's breakdown impacts the story and whether it aligns with the trope definition.
+    # 4. Answer Selection: Use the collected information to determine if the trope ""Villainous Breakdown"" is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""villain""):
+            villain_behavior = frame.simple_query(""Describe the behavior of the villain in this frame."")
+            if ""calm"" in villain_behavior and ""agitated"" in villain_behavior:
+                breakdown_description = frame.simple_query(""Is the villain showing signs of a breakdown?"")
+                info[f""Villainous Breakdown in frame {i}""] = breakdown_description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_50|Precision F-Strike|"Is the trope ""Precision F-Strike"", which means ""When a character suddenly swears in an uncharacteristically strong manner, or when a swear is unexpectedly used in a work with mild language."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Precision F-Strike
+    # Definition: When a character suddenly swears in an uncharacteristically strong manner, or when a swear is unexpectedly used in a work with mild language.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances of strong language or unexpected swearing.
+    # 2. Language Analysis: Look for sudden changes in dialogue or visual cues that indicate a shift in language tone.
+    # 3. Trope Relevance: Determine if the presence of strong language aligns with the Precision F-Strike trope.
+    # 4. Answer Selection: Use the select_answer API to choose the most appropriate answer based on the identified instances.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for strong language or unexpected swearing
+        strong_language = frame.simple_query(""Is there strong language or unexpected swearing in this frame?"", to_yesno=True)
+        if ""yes"" in strong_language.lower():
+            language_context = frame.simple_query(""Describe the context of the strong language."")
+            info[f""Strong language in frame {i}""] = language_context
+
+    # Analyze the collected information to determine the relevance of the Precision F-Strike trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_51|Cluster F-Bomb|"Is the trope ""Cluster F-Bomb"", which means ""Lots of swearing occur."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Cluster F-Bomb
+    # Definition: A trope where there is an excessive amount of swearing or profanity in a particular scene or throughout the video.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for instances of swearing or profanity.
+    # 2. Profanity Detection: Look for explicit language, gestures, or context that indicates the presence of profanity.
+    # 3. Answer Selection: Use the select_answer API to determine if the ""Cluster F-Bomb"" trope is relevant based on the profanity detected.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    profanity_count = 0
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect profanity in the frame
+        profanity_query = frame.simple_query(""Is there any swearing or profanity in this frame?"", to_yesno=True)
+        if ""yes"" in profanity_query.lower():
+            profanity_count += 1
+            info[f""Profanity in frame {i}""] = profanity_query
+
+    # Determine if the ""Cluster F-Bomb"" trope is relevant based on the profanity count
+    if profanity_count >= 3:
+        answer = ""yes""
+        reason = ""There is a significant amount of swearing or profanity in the video.""
+    else:
+        answer = ""no""
+        reason = ""The amount of swearing or profanity in the video is not significant enough for the trope.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_52|Jerkass Has a Point|"Is the trope ""Jerkass Has a Point"", which means ""When a jerkass is right."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Jerkass Has a Point
+    # Definition: A narrative trope where a character who is generally unpleasant or behaves like a jerk is proven to be correct or justified in a particular situation or argument.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a character exhibits jerkass behavior or unpleasant traits.
+    # 2. Justification Analysis: Look for situations where the character's actions or statements are validated or proven right within the context of the video.
+    # 3. Answer Selection: Utilize the select_answer API to determine if the trope ""Jerkass Has a Point"" is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect characters exhibiting jerkass behavior
+        jerkass_characters = frame.find(""jerkass"")
+        for character in jerkass_characters:
+            # Analyze the character's behavior and traits
+            character_behavior = character.simple_query(""Describe the behavior of this character."")
+            # Check if the character's behavior is justified or proven right
+            justification_query = character.simple_query(""Is the character's behavior justified or proven right in this scene?"", to_yesno=True)
+            if ""yes"" in justification_query.lower():
+                info[f""Jerkass behavior in frame {i}""] = character_behavior
+                info[f""Justification in frame {i}""] = justification_query
+
+    # Determine if the trope ""Jerkass Has a Point"" is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_53|Idiot Ball|"Is the trope ""Idiot Ball"", which means ""A moment where a character's stupidity fuels an episode, or a small plot line."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Idiot Ball
+    # Definition: A moment where a character's stupidity fuels an episode, or a small plot line.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where character actions are driven by stupidity.
+    # 2. Character Behavior Analysis: Look for actions or decisions that are illogical or counterproductive.
+    # 3. Plot Impact Assessment: Determine how the character's stupidity influences the storyline or specific events.
+    # 4. Answer Selection: Use the select_answer API to decide if the trope is relevant based on the collected information.
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        stupidity_check = frame.simple_query(""Is there a character acting stupidly?"", to_yesno=True)
+        if ""yes"" in stupidity_check.lower():
+            character_actions = frame.simple_query(""Describe the character's actions."")
+            plot_impact = frame.simple_query(""How does this stupidity affect the plot?"")
+            info[f""Character actions in frame {i}""] = character_actions
+            info[f""Plot impact in frame {i}""] = plot_impact
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_54|Batman Gambit|"Is the trope ""Batman Gambit"", which means ""A plan that revolves entirely around people doing exactly what you'd expect them to do."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Batman Gambit
+    # Definition: A plan that revolves entirely around people doing exactly what you'd expect them to do.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify instances where characters manipulate others' actions as part of a larger plan.
+    # 2. Behavioral Analysis: Look for subtle cues or dialogues that suggest characters are anticipating and exploiting predictable behavior.
+    # 3. Plan Evaluation: Determine if the observed actions align with the definition of a ""Batman Gambit.""
+    # 4. Answer Selection: Use the select_answer API to choose the most appropriate answer based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting manipulative behavior or anticipation of actions
+        behavior_analysis = frame.simple_query(""Are characters manipulating others' actions?"", to_yesno=True)
+        if ""yes"" in behavior_analysis.lower():
+            plan_description = frame.simple_query(""Describe the plan and how it relies on predictable behavior."")
+            info[f""Batman Gambit in frame {i}""] = plan_description
+
+    # Analyze the collected information to determine if the ""Batman Gambit"" trope is present
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_55|Police are Useless|"Is the trope ""Police are Useless"", which means ""Whenever someone in film or on TV reports a murder, or a monster, or a stalker or whatever, the police come as close to ignoring them 
+as procedure will allow. "", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Police are Useless
+    # Definition: Whenever someone in film or on TV reports a murder, or a monster, or a stalker or whatever, the police come as close to ignoring them as procedure will allow.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances where characters report incidents to the police.
+    # 2. Police Response Analysis: Look for patterns where the police response is inadequate or dismissive towards reported incidents.
+    # 3. Incident Severity Check: Determine if the police response matches the severity of the reported incidents.
+    # 4. Answer Selection: Use the collected information to decide if the ""Police are Useless"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check if there are any scenes involving reporting incidents to the police
+        if frame.exists(""police"") and frame.exists(""incident""):
+            # Analyze the police response to the reported incident
+            police_response = frame.simple_query(""How do the police respond to the incident?"")
+            info[f""Police response in frame {i}""] = police_response
+            
+            # Check if the police response aligns with the severity of the incident
+            incident_severity = frame.simple_query(""How severe is the incident?"")
+            info[f""Incident severity in frame {i}""] = incident_severity
+            
+    # Analyze the collected information to determine if the ""Police are Useless"" trope applies
+    # You can customize the logic based on the specific characteristics of the trope
+    
+    # Placeholder logic for answer selection
+    answer = ""yes"" if any(""ignore"" in response.lower() for response in info.values()) else ""no""
+    reason = ""The police responses in some frames indicate a dismissive attitude towards reported incidents.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_56|The Dragon|"Is the trope ""The Dragon"", which means ""There is almost always someone, person or monster, The Hero has to get past to get at the Big Bad."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: The Dragon
+    # Definition: There is almost always someone, person or monster, The Hero has to get past to get at the Big Bad.
+    # Thought Process:
+    # 1. Frame Selection: Identify the character or entity that serves as the obstacle for the hero.
+    # 2. Character Analysis: Analyze the characteristics and role of this character in relation to the hero and the main antagonist.
+    # 3. Plot Progression: Look for scenes where the hero interacts with or confronts this character.
+    # 4. Trope Relevance: Determine if the presence of this character aligns with the trope definition.
+    # 5. Answer Selection: Use the collected information to decide if the trope ""The Dragon"" is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    dragon_character = None
+    info = {}
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        dragon_candidates = frame.find(""dragon"")
+        if dragon_candidates:
+            dragon_character = best_image_match(dragon_candidates, [""person"", ""monster""])
+
+    if dragon_character:
+        # Analyze the role and characteristics of the dragon character
+        dragon_description = dragon_character.simple_query(""Describe the dragon character."")
+        info[""Dragon Character Description""] = dragon_description
+
+        # Check for interactions between the hero and the dragon character
+        hero_dragon_interaction = dragon_character.exists(""hero"")
+        info[""Hero-Dragon Interaction""] = bool_to_yesno(hero_dragon_interaction)
+
+        # Determine if the dragon character fits the trope definition
+        is_dragon_relevant = hero_dragon_interaction
+        answer = bool_to_yesno(is_dragon_relevant)
+        reason = ""The presence of a character that serves as an obstacle for the hero aligns with the trope definition of 'The Dragon'.""
+    else:
+        answer = ""no""
+        reason = ""No character fitting the role of 'The Dragon' was identified in the video.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_57|Cool Car|"Is the trope ""Cool Car"", which means ""The hero's ride has to be just as unique and awesome as the hero is. Enter a Cool Car!"", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Cool Car
+    # Definition: The hero's ride has to be just as unique and awesome as the hero is. Enter a Cool Car!
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify the presence of a unique and impressive vehicle associated with the hero.
+    # 2. Vehicle Analysis: Look for visual cues that indicate the vehicle's uniqueness, such as design, features, and context within the scene.
+    # 3. Hero-Vehicle Relationship: Assess how the vehicle complements the hero's character and contributes to the overall narrative.
+    # 4. Answer Selection: Use the select_answer API to determine if the Cool Car trope is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""car""):
+            car_description = frame.simple_query(""Describe the car. Is it unique and impressive?"")
+            hero_interaction = frame.simple_query(""How does the hero interact with the car?"")
+            info[f""Car description in frame {i}""] = car_description
+            info[f""Hero interaction in frame {i}""] = hero_interaction
+
+    # Analyze the collected information to determine if the Cool Car trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_58|Body Horror|"Is the trope ""Body Horror"", which means ""This is any form of horror or squickiness involving body parts, parasitism, disfigurement, mutation, or unsettling bodily configuration."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Body Horror
+    # Definition: Any form of horror or squickiness involving body parts, parasitism, disfigurement, mutation, or unsettling bodily configuration.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for visual cues of body horror elements such as disfigurement, mutation, or unsettling body configurations.
+    # 2. Element Detection: Look for specific body horror tropes like parasitism, body mutations, or graphic disfigurements within the frames.
+    # 3. Narrative Analysis: Identify any narrative elements or character actions that contribute to the body horror theme.
+    # 4. Answer Selection: Use the select_answer API to determine if the body horror trope is relevant to the movie based on the collected information.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting visual cues related to body horror
+        has_body_horror = frame.exists(""body horror"")
+        if has_body_horror:
+            body_horror_description = frame.simple_query(""Describe the body horror elements in the frame."")
+            info[f""Body Horror in frame {i}""] = body_horror_description
+    
+    # Analyze the collected information to determine the relevance of the body horror trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_59|The Reveal|"Is the trope ""The Reveal"", which means ""A character is revealed as another character's father, a god, or secret suitor or arch nemesis in disguise."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: The Reveal
+    # Definition: A character is revealed as another character's father, a god, or secret suitor or arch nemesis in disguise.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify potential moments of revelation or hidden identities.
+    # 2. Character Analysis: Look for visual cues, interactions, or dialogues that hint at hidden relationships or identities.
+    # 3. Plot Development: Consider how the revelation impacts the storyline and character dynamics.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    # Implement the logic to detect ""The Reveal"" trope in the video segment
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect potential moments of revelation or hidden identities
+        reveal_query = frame.simple_query(""Is there a moment of revelation or hidden identity in this frame?"", to_yesno=True)
+        if ""yes"" in reveal_query.lower():
+            # Analyze the frame for visual cues or dialogues indicating a reveal
+            character_interaction = frame.simple_query(""Describe the character interaction hinting at the reveal."")
+            info[f""Reveal in frame {i}""] = character_interaction
+
+    # Use the collected information to determine if the trope is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_60|Curb-Stomp Battle|"Is the trope ""Curb-Stomp Battle"", which means ""A fight that's extremely one-sided, where one side just absolutely trashes the other with little-to-no effort"", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Curb-Stomp Battle
+    # Definition: A fight that's extremely one-sided, where one side just absolutely trashes the other with little-to-no effort.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify a scene where one side dominates the other in a battle or conflict.
+    # 2. Battle Analysis: Look for visual cues indicating a one-sided fight, such as overwhelming force, lack of resistance, or clear victory.
+    # 3. Answer Selection: Use the collected information to determine if the ""Curb-Stomp Battle"" trope is relevant to the video segment.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze each frame for signs of a one-sided battle
+        battle_description = frame.simple_query(""Describe the battle or conflict in the scene."")
+        dominance_query = frame.simple_query(""Is one side clearly dominating the other?"", to_yesno=True)
+
+        if ""yes"" in dominance_query.lower():
+            # Collect information about the one-sided battle
+            dominant_side = frame.simple_query(""Which side is dominating and how?"")
+            defeated_side = frame.simple_query(""How is the other side being defeated?"")
+            info[f""One-Sided Battle in Frame {i}""] = {
+                ""Battle Description"": battle_description,
+                ""Dominant Side"": dominant_side,
+                ""Defeated Side"": defeated_side
+            }
+
+    # Determine if the ""Curb-Stomp Battle"" trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_61|Cassandra Truth|"Is the trope ""Cassandra Truth"", which means ""Sometimes people just won't believe you even though you are telling the truth, because the truth sounds insane."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Cassandra Truth
+    # Definition: Sometimes people just won't believe you even though you are telling the truth, because the truth sounds insane.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a character is sharing a seemingly unbelievable truth.
+    # 2. Truth Evaluation: Evaluate the truthfulness and believability of the shared information.
+    # 3. Reaction Analysis: Observe the reactions of other characters to determine if they believe the shared truth.
+    # 4. Answer Selection: Use the collected information to determine if the Cassandra Truth trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""character""):
+            truth_statement = frame.simple_query(""What unbelievable truth is being shared?"")
+            truth_believability = frame.simple_query(""Is the truth believable?"", to_yesno=True)
+            character_reactions = frame.simple_query(""How do other characters react to the truth?"")
+            info[f""Truth statement in frame {i}""] = truth_statement
+            info[f""Truth believability in frame {i}""] = truth_believability
+            info[f""Character reactions in frame {i}""] = character_reactions
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_62|Blatant Lies|"Is the trope ""Blatant Lies"", which means ""A glaringly obvious lie."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Blatant Lies
+    # Definition: A glaringly obvious lie.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances where characters are likely telling lies.
+    # 2. Lie Detection: Look for visual cues, dialogue inconsistencies, or character behaviors that suggest blatant lies.
+    # 3. Answer Selection: Use the collected information to determine if the trope is relevant to the video segment.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting instances of blatant lies in the dialogue or visual cues
+        has_blatant_lie = frame.simple_query(""Are there any instances of blatant lies?"", to_yesno=True)
+        
+        if ""yes"" in has_blatant_lie.lower():
+            # Collect information about the blatant lie
+            lie_description = frame.simple_query(""Describe the blatant lie in the scene."")
+            info[f""Blatant Lie in frame {i}""] = lie_description
+
+    # Use the collected information to determine if the ""Blatant Lies"" trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_63|Crapsack World|"Is the trope ""Crapsack World"", which means ""A Crapsack World is a horrible setting of the world where it's dark and hopeless"", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Crapsack World
+    # Definition: A Crapsack World is a horrible setting of the world where it's dark and hopeless.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the entire video segment to determine the overall tone and setting.
+    # 2. Setting Analysis: Look for visual cues, character interactions, and environmental details that suggest a dark and hopeless world.
+    # 3. Answer Determination: Use the collected information to decide whether the movie fits the definition of a Crapsack World.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze each frame for visual cues of a dark and hopeless world
+        dark_world_query = frame.simple_query(""Does the scene depict a dark and hopeless world?"", to_yesno=True)
+        if ""yes"" in dark_world_query.lower():
+            # Collect details about the dark and hopeless setting
+            caption = frame.simple_query(""Describe the setting in the scene."")
+            info[f""Dark and Hopeless Setting in Frame {i}""] = caption
+
+    # Determine if the movie fits the trope of a Crapsack World
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_64|Comically Missing the Point|"Is the trope ""Comically Missing the Point"", which means ""A character completely misses a really obvious point for comic effect."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Comically Missing the Point
+    # Definition: A character completely misses a really obvious point for comic effect.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a character overlooks a clear point.
+    # 2. Contextual Analysis: Look for situations where the character's misunderstanding is evident and contributes to humor.
+    # 3. Humor Evaluation: Assess if the character's obliviousness is played for comedic effect.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for instances where a character misses an obvious point
+        obliviousness_query = frame.simple_query(""Is there a character missing an obvious point?"", to_yesno=True)
+        if ""yes"" in obliviousness_query.lower():
+            context_description = frame.simple_query(""Describe the context of the character's misunderstanding."")
+            humor_evaluation = frame.simple_query(""Is the misunderstanding played for comedic effect?"", to_yesno=True)
+            info[f""Context of misunderstanding in frame {i}""] = context_description
+            info[f""Humor evaluation in frame {i}""] = humor_evaluation
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_65|Fanservice|"Is the trope ""Fanservice"", which means ""The use of sex or sexualized situations to reward or entice viewers."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Fanservice
+    # Definition: The use of sex or sexualized situations to reward or entice viewers.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for instances of sexual content or situations that may be considered fanservice.
+    # 2. Contextual Analysis: Look for visual cues, character interactions, and scenes that suggest the presence of fanservice.
+    # 3. Detecting Fanservice: Identify scenes or elements that cater to the audience's sexual appeal without necessarily advancing the plot.
+    # 4. Answer Selection: Use the select_answer API to determine if the fanservice trope is relevant to the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting sexual content or situations that may be considered fanservice
+        has_sexual_content = frame.exists(""sexual content"")
+        has_suggestive_scenes = frame.simple_query(""Are there suggestive scenes?"", to_yesno=True)
+        
+        if has_sexual_content or ""yes"" in has_suggestive_scenes.lower():
+            # Collect information about the frame
+            frame_description = frame.simple_query(""Describe the scene with sexual content or fanservice."")
+            info[f""Fanservice detected in frame {i}""] = frame_description
+
+    # Determine if the fanservice trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_66|Fan Disservice|"Is the trope ""Fan Disservice"", which means ""Fan Disservice looks like regular garden variety Fanservice, except that the creators intentionally use the circumstances around it to make the 
+scene outright creepy or disgusting."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Fan Disservice
+    # Definition: Fan Disservice looks like regular garden variety Fanservice, except that the creators intentionally use the circumstances around it to make the scene outright creepy or disgusting.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances of potential Fan Disservice.
+    # 2. Contextual Analysis: Look for elements in the scene that may appear as Fanservice at first glance but have underlying creepy or disgusting connotations.
+    # 3. Detecting Fan Disservice: Identify scenes where the creators intentionally subvert the typical Fanservice elements to create discomfort or disgust.
+    # 4. Answer Selection: Utilize the select_answer API to determine if the trope ""Fan Disservice"" is relevant to the movie based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for elements that may indicate Fan Disservice
+        has_fan_disservice = frame.simple_query(""Is there any scene that appears as Fanservice but intentionally made creepy or disgusting?"", to_yesno=True)
+        
+        if ""yes"" in has_fan_disservice.lower():
+            # Collect details of the Fan Disservice scene
+            fan_disservice_description = frame.simple_query(""Describe the scene that exhibits Fan Disservice."")
+            info[f""Fan Disservice in frame {i}""] = fan_disservice_description
+
+    # Determine if the trope ""Fan Disservice"" is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_67|Brick Joke|"Is the trope ""Brick Joke"", which means ""When two seemingly unrelated jokes work together to create a comedic effect."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Brick Joke
+    # Definition: When two seemingly unrelated jokes work together to create a comedic effect.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify potential setups and payoffs for jokes.
+    # 2. Joke Analysis: Look for two jokes that initially appear unrelated but later combine to create humor.
+    # 3. Comedic Effect: Determine if the jokes in the video segment align with the essence of a Brick Joke.
+    # 4. Answer Selection: Use the select_answer API to choose the most appropriate answer based on the detected comedic elements.
+
+    video_segment = VideoSegment(video, annotation)
+    # Initialize an info dictionary to store detected comedic elements
+    info = {}
+    
+    # Implement your logic to detect the Brick Joke trope in the video segment
+    # You can analyze frames, dialogues, visual cues, or any other relevant elements
+    
+    # Example pseudo-code:
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect potential setups and payoffs for jokes
+        setup_joke = frame.simple_query(""What is the setup joke in this frame?"")
+        payoff_joke = frame.simple_query(""What is the payoff joke in this frame?"")
+        
+        # Check if the two jokes combine to create a comedic effect
+        if setup_joke and payoff_joke:
+            # Store the detected comedic elements in the info dictionary
+            info[f""Setup Joke in Frame {i}""] = setup_joke
+            info[f""Payoff Joke in Frame {i}""] = payoff_joke
+
+    # Use the collected information to determine if the Brick Joke trope is present
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_68|Hypocritical Humor|"Is the trope ""Hypocritical Humor"", which means ""A type of gag in which a character's actions or words contradict each other and this is Played for Laughs."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Hypocritical Humor
+    # Definition: A type of gag in which a character's actions or words contradict each other and this is Played for Laughs.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances where a character's actions or words contradict each other.
+    # 2. Contradiction Detection: Look for humorous situations where a character behaves hypocritically, leading to comedic effect.
+    # 3. Answer Selection: Use the select_answer API to determine if the ""Hypocritical Humor"" trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect instances of hypocritical behavior or contradictory statements
+        contradiction_query = frame.simple_query(""Is there any hypocritical behavior or contradictory statements?"", to_yesno=True)
+        
+        if ""yes"" in contradiction_query.lower():
+            # Gather details about the hypocritical humor
+            humor_description = frame.simple_query(""Describe the hypocritical humor in the scene."")
+            info[f""Hypocritical Humor in frame {i}""] = humor_description
+    
+    # Use the collected information to determine if the trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_69|Does This Remind You of Anything?|"Is the trope ""Does This Remind You of Anything?"", which means ""Any situation which is made, sometimes for comic effect, sometimes for dramatic effect, to look like another situation."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Initialize an empty dictionary to store information collected during analysis
+    info = {}
+
+    # Iterate over each frame in the video segment
+    video_segment = VideoSegment(video, annotation)
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze the frame for elements that resemble or can be interpreted as resembling other situations
+        resemblance_query = frame.simple_query(""Does this scene remind you of anything?"", to_yesno=True)
+        
+        # If the frame resembles another situation, collect additional information
+        if ""yes"" in resemblance_query.lower():
+            resemblance_description = frame.simple_query(""Describe the resemblance in detail."")
+            info[f""Resemblance in frame {i}""] = resemblance_description
+
+    # Use the collected information to determine if the trope is relevant to the video
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_70|Black Comedy|"Is the trope ""Black Comedy"", which means ""A sub-genre of comedy and satire where topics and events that are usually treated seriously are treated in a satirical manner, while still being 
+portrayed as the negative events that they are."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Black Comedy
+    # Definition: A sub-genre of comedy and satire where topics and events that are usually treated seriously are treated in a satirical manner, while still being portrayed as the negative events that they are.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames for scenes or events that involve serious topics but are presented in a satirical or comedic manner.
+    # 2. Tone Analysis: Look for visual and contextual cues that indicate a satirical approach to serious subjects.
+    # 3. Relevance Check: Determine if the movie's treatment of serious topics aligns with the characteristics of Black Comedy.
+    # 4. Answer Selection: Use the collected information to decide whether the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for scenes involving serious topics
+        if frame.exists(""serious topic""):
+            # Analyze the tone of the scene
+            tone_analysis = frame.simple_query(""Is the serious topic presented in a satirical manner?"", to_yesno=True)
+            if ""yes"" in tone_analysis.lower():
+                # Capture relevant information
+                scene_description = frame.simple_query(""Describe the scene involving the serious topic."")
+                info[f""Scene description at frame {i}""] = scene_description
+
+    # Determine the relevance of Black Comedy trope to the movie based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_71|Irony|"Is the trope ""Irony"", which means ""The intended meaning is an inversion of the plain meaning."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Irony
+    # Definition: The intended meaning is an inversion of the plain meaning.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify situations where the intended meaning is opposite to the plain meaning.
+    # 2. Contextual Analysis: Look for scenarios where there is a clear contradiction between what is expected and what actually happens.
+    # 3. Irony Detection: Identify instances of irony in dialogue, actions, or visual elements within the video.
+    # 4. Answer Selection: Use the select_answer API to determine if the ""Irony"" trope is relevant to the movie based on the detected instances of irony.
+
+    video_segment = VideoSegment(video, annotation)
+    # Create an info dictionary to store detected instances of irony
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect irony in dialogue, actions, or visual elements
+        irony_detection = frame.simple_query(""Is there any instance of irony in this frame?"", to_yesno=True)
+        if ""yes"" in irony_detection.lower():
+            irony_description = frame.simple_query(""Describe the instance of irony."")
+            info[f""Irony in frame {i}""] = irony_description
+
+    # Use the collected information to determine if the ""Irony"" trope is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_72|Exact Words|"Is the trope ""Exact Words"", which means ""When the exact wording of a rule, promise, prophecy, etc. matters more than the spirit of the wording, it's an Exact Words situation."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Exact Words
+    # Definition: When the exact wording of a rule, promise, prophecy, etc. matters more than the spirit of the wording, it's an Exact Words situation.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where the exact wording of a statement or rule is crucial to the outcome.
+    # 2. Contextual Analysis: Look for scenarios where a character's adherence to the literal interpretation of words leads to significant consequences.
+    # 3. Trope Identification: Detect situations where the characters' actions or decisions hinge on the precise wording of a statement.
+    # 4. Answer Selection: Utilize the select_answer API to determine if the trope ""Exact Words"" is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze frames for instances where exact wording is crucial
+        exact_words_query = frame.simple_query(""Is there a situation where the exact wording is crucial?"", to_yesno=True)
+        
+        if ""yes"" in exact_words_query.lower():
+            # Collect information about the scenario
+            scenario_description = frame.simple_query(""Describe the scenario where exact wording matters."")
+            info[f""Exact Words scenario in frame {i}""] = scenario_description
+    
+    # Determine if the trope ""Exact Words"" is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_73|Stealth Pun|"Is the trope ""Stealth Pun"", which means ""The writers put in a joke (almost always a pun), but never make or put in a Punch Line or explicit statement, hiding it in the set up of the joke. "", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Stealth Pun
+    # Definition: A joke, typically a pun, is included by the writers but is not highlighted with a punchline or explicit statement. It's hidden within the setup of the joke, requiring the audience to notice and interpret it themselves.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for potential visual or audio cues that might indicate a hidden joke or pun. This requires understanding both the context and the elements present in the scene.
+    # 2. Contextual Analysis: Since the essence of a Stealth Pun lies in the setup and requires audience interpretation, we need to look for elements that are inconspicuously out of place or cleverly integrated into the context but might not be immediately obvious.
+    # 3. Detecting Puns: This involves analyzing the text or dialogue for play on words, and visual elements for any visual puns or jokes that rely on the visual context but are not explicitly acknowledged in the video.
+    # 4. Answer Selection: Use the select_answer API to determine the most probable answer based on the analyzed data, considering the subtlety and clever integration of puns within the video content.
+    
+    video_segment = VideoSegment(video, annotation)
+    
+    # Create an info dictionary to hold detected elements that might contribute to a Stealth Pun
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Assuming functions exist for detecting puns in dialogue or visual elements
+        has_pun_in_dialogue = frame.simple_query(""Are there any puns in the dialogue?"", to_yesno=True)
+        has_visual_pun = frame.simple_query(""Are there any visual puns?"", to_yesno=True)
+        
+        # If either dialogue or visual analysis suggests a pun, collect this information
+        if ""yes"" in has_pun_in_dialogue.lower() or ""yes"" in has_visual_pun.lower():
+            dialogue_analysis = frame.simple_query(""What pun is in the dialogue?"")
+            visual_pun_analysis = frame.simple_query(""What visual pun is in the frame?"")
+            info[f""Pun in dialogue at frame {i}""] = dialogue_analysis
+            info[f""Visual pun at frame {i}""] = visual_pun_analysis
+    
+    # Since Stealth Puns are about subtlety and not explicitly pointing out the joke, we need to balance detection with the likelihood of an actual pun being present without explicit acknowledgment.
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_74|Bittersweet Ending|"Is the trope ""Bittersweet Ending"", which means ""When victory came at a harsh price, when, for whatever reason, the heroes cannot fully enjoy the reward of their actions, when some 
+irrevocable loss has happened during the course of the events, and nothing will ever be the same again."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Bittersweet Ending
+    # Definition: When victory came at a harsh price, when, for whatever reason, the heroes cannot fully enjoy the reward of their actions, when some irrevocable loss has happened during the course of the events, and nothing will ever be the same again.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video segment to identify instances where victory is achieved but at a significant cost or loss.
+    # 2. Emotional Impact Analysis: Look for emotional cues, character reactions, and narrative elements that suggest a bittersweet outcome.
+    # 3. Answer Selection: Use the select_answer API to determine if the trope of a Bittersweet Ending is relevant to the movie based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze frames for emotional impact and narrative elements
+        emotional_response = frame.simple_query(""Is there a sense of loss or bittersweetness in the scene?"", to_yesno=True)
+        if ""yes"" in emotional_response.lower():
+            # Collect information about the bittersweet elements
+            caption = frame.simple_query(""Describe the bittersweet elements in the scene."")
+            info[f""Bittersweet elements in frame {i}""] = caption
+
+    # Determine if the trope of a Bittersweet Ending is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_75|Karma Houdini|"Is the trope ""Karma Houdini"", which means ""The character has done a number of things that deserve a karmic comeuppance, most importantly things that caused harm to the innocent. But 
+when the time comes for the hammer to fall, that's not what happens. At least, not on them. They don\t get what they deserve."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Karma Houdini
+    # Definition: The character has done things deserving karmic comeuppance, especially causing harm to the innocent. However, when retribution seems imminent, they escape consequences.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where a character's actions align with the trope's definition.
+    # 2. Character Assessment: Evaluate the character's deeds and their impact on others, focusing on potential karmic repercussions.
+    # 3. Retribution Analysis: Look for situations where the character avoids expected consequences, indicating a Karma Houdini scenario.
+    # 4. Answer Selection: Utilize the collected data to determine if the trope applies to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for character actions that may lead to karmic repercussions
+        character_actions = frame.simple_query(""Describe the character's actions and their impact on others."")
+        
+        # Assess if the character's actions align with the trope's definition
+        karma_impact = frame.simple_query(""Do the character's actions potentially lead to karmic consequences?"", to_yesno=True)
+        
+        if ""yes"" in karma_impact.lower():
+            # Analyze the character's escape from expected consequences
+            escape_analysis = frame.simple_query(""Does the character avoid expected consequences?"", to_yesno=True)
+            info[f""Character actions in frame {i}""] = character_actions
+            info[f""Escape from consequences in frame {i}""] = escape_analysis
+    
+    # Determine if the Karma Houdini trope is relevant to the movie based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_76|Downer Ending|"Is the trope ""Downer Ending"", which means ""A finale to a movie that ends things in a way that varies from sad to tragic."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Downer Ending
+    # Definition: an ending that is sad, tragic, or otherwise less positive than the audience might have expected, often leaving the protagonist or key characters in a worse state than they were at the beginning or facing significant loss
+    # Thought: we devide the trope detection into 3 steps
+    # 1. Frame selection: ""Downer Ending"" refers to an ending, so we only analyze the final part of video segment
+    # 2. Detection of emotional and contextual cues: Analyze the frames for visual cues of sadness, loss, or tragedy. This could involve detecting specific objects, settings, or facial expressions associated with negative outcomes
+    # 3. Answer Selection: Use select_answer api to select the most possible answer with previously collected information 
+    video_segment = VideoSegment(video, annotation)
+    # Assuming the last 10% of the video is a reasonable segment to analyze for the ending
+    ending_segment_start = int(video_segment.num_frames * 0.9)
+    ending_segment = video_segment.trim(start=ending_segment_start)
+    # Create a info dictionary
+    info = {
+        ""Total number of frames"": video_segment.num_frames
+    }
+    for i, frame in enumerate(ending_segment.frame_iterator()):
+        # Detect visual cues of sadness, tragedy, or loss
+        sadness_query = frame.simple_query(""Is there sadness or mourning?"", to_yesno=True)
+        tragedy_query = frame.simple_query(""Is there visible tragedy or destruction?"", to_yesno=True)
+
+        if ""yes"" in sadness_query.lower() or ""yes"" in tragedy_query.lower():
+            # Caption the frame
+            caption = frame.simple_query(""What is in the frame?"")
+            sadness_query = frame.simple_query(""What sadness or mourning event is in the frame?"")
+            tragedy_query = frame.simple_query(""What visible tragedy or destruction event is in the frame?"")
+            info[f""Caption of {ending_segment.start + 1} th frame""] = caption
+            info[f""Sadness or mourning event in {ending_segment.start + 1} th frame""] = sadness_query
+            info[f""Visible tragedy or destruction event in {ending_segment.start + 1} th frame""] = tragedy_query
+    # Answer the query
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_77|Laser-Guided Karma|"Is the trope ""Laser-Guided Karma"", which means ""If you mistreat the people and things around you, karma will strike you down."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Laser-Guided Karma
+    # Definition: If you mistreat the people and things around you, karma will strike you down.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify instances of mistreatment or negative actions.
+    # 2. Karma Observation: Look for subsequent events that indicate a form of retribution or consequences for the negative actions.
+    # 3. Answer Selection: Use the select_answer API to determine if the trope is relevant based on the detected instances of mistreatment and karma.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect mistreatment or negative actions
+        mistreatment_query = frame.simple_query(""Is there any mistreatment or negative actions happening?"", to_yesno=True)
+        
+        if ""yes"" in mistreatment_query.lower():
+            # Query for karma or consequences
+            karma_query = frame.simple_query(""Are there any subsequent events indicating karma or consequences?"", to_yesno=True)
+            if ""yes"" in karma_query.lower():
+                mistreatment_description = frame.simple_query(""Describe the mistreatment or negative actions."")
+                karma_description = frame.simple_query(""Describe the karma or consequences."")
+                info[f""Mistreatment in frame {i}""] = mistreatment_description
+                info[f""Karma in frame {i}""] = karma_description
+    
+    # Determine if the trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_78|Earn Your Happy Ending|"Is the trope ""Earn Your Happy Ending"", which means ""A cast of characters in a story go through a lot more hardship, anguish and grief than is really necessary. In the end, however, you see them get 
+their happily-ever-after."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Earn Your Happy Ending
+    # Definition: A cast of characters in a story go through a lot more hardship, anguish, and grief than is really necessary. In the end, however, you see them get their happily-ever-after.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the entire video to identify instances of significant hardship, anguish, and grief experienced by the characters.
+    # 2. Character Development: Look for character arcs that involve overcoming challenges and adversities to reach a positive resolution.
+    # 3. Narrative Resolution: Identify the conclusion of the story and determine if it aligns with a satisfying and optimistic outcome for the characters.
+    # 4. Answer Selection: Use the select_answer API to evaluate if the movie fits the trope of ""Earn Your Happy Ending.""
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze frames for emotional cues and character development
+        character_struggle = frame.simple_query(""Do the characters face significant challenges or hardships?"", to_yesno=True)
+        if ""yes"" in character_struggle.lower():
+            character_arc = frame.simple_query(""Describe the character development and growth in this scene."")
+            info[f""Character arc in frame {i}""] = character_arc
+
+    # Analyze the overall narrative for a satisfying resolution
+    narrative_resolution = video_segment.simple_query(""Does the movie have a happy ending?"", to_yesno=True)
+    info[""Narrative resolution""] = narrative_resolution
+
+    # Determine if the movie fits the trope of ""Earn Your Happy Ending""
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_79|Karmic Death|"Is the trope ""Karmic Death"", which means ""When the villain dies in a manner that is completely their own fault. Or, at least, obviously not the hero's."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Karmic Death
+    # Definition: When the villain dies in a manner that is completely their own fault. Or, at least, obviously not the hero's.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify the villain character and their demise.
+    # 2. Villain's Demise Analysis: Look for cues indicating that the villain's death is a result of their own actions or hubris.
+    # 3. Hero's Role: Ensure that the hero is not directly responsible for the villain's demise.
+    # 4. Answer Selection: Use the collected information to determine if the ""Karmic Death"" trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    villain_present = False
+    villain_dies = False
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""villain""):
+            villain_present = True
+            demise_query = frame.simple_query(""Describe how the villain meets their end."")
+            if ""own fault"" in demise_query.lower() or ""not hero's"" in demise_query.lower():
+                villain_dies = True
+                info[""Villain's Demise Description""] = demise_query
+
+    if villain_present and villain_dies:
+        answer = ""yes""
+        reason = ""The villain's death aligns with the 'Karmic Death' trope.""
+    else:
+        answer = ""no""
+        reason = ""The 'Karmic Death' trope is not relevant to the movie.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_80|Nice Job Breaking It, Hero!|"Is the trope ""Nice Job Breaking It, Hero!"", which means ""The hero has accomplished their goal, but it turns out that by the very act of success, they've unwittingly made things worse."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Nice Job Breaking It, Hero!
+    # Definition: The hero has accomplished their goal, but it turns out that by the very act of success, they've unwittingly made things worse.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances where the hero's actions lead to unintended negative consequences.
+    # 2. Consequence Analysis: Look for visual cues or events that indicate the hero's success has backfired or caused harm.
+    # 3. Answer Selection: Use the select_answer API to determine if the trope is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze the frame for instances of unintended negative consequences
+        if frame.exists(""hero""):
+            # Check if the hero's actions have unintended negative consequences
+            consequences_query = frame.simple_query(""Do the hero's actions lead to unintended negative consequences?"", to_yesno=True)
+            if ""yes"" in consequences_query.lower():
+                # Collect information about the unintended consequences
+                consequences_description = frame.simple_query(""Describe the unintended negative consequences caused by the hero."")
+                info[f""Unintended consequences in frame {i}""] = consequences_description
+
+    # Use the collected information to determine if the trope is relevant
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_81|My God, What Have I Done?|"Is the trope ""My God, What Have I Done?"", which means ""Well-intentioned but misguided character (very likely a Tragic Hero, a Tragic Villain or Anti-Villain) comes to realize that his actions have
+ caused incredible damage, physical pain, emotional pain, or even loss of life."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: My God, What Have I Done?
+    # Definition: A character, often with good intentions, realizes the severe consequences of their actions, causing harm, pain, or loss.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify moments where a character's actions lead to significant consequences.
+    # 2. Character Analysis: Look for visual cues or dialogue indicating the character's realization of the damage caused.
+    # 3. Consequence Detection: Identify the harm, pain, or loss resulting from the character's actions.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope is relevant based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze each frame for cues related to the trope
+        character_actions = frame.simple_query(""What actions are the characters taking?"")
+        consequences = frame.simple_query(""What are the consequences of these actions?"")
+        
+        if ""realization"" in character_actions.lower() and ""damage"" in consequences.lower():
+            # Collect information indicating the trope
+            realization_dialogue = frame.simple_query(""What dialogue shows the character's realization?"")
+            consequence_description = frame.simple_query(""Describe the consequences of the actions."")
+            info[f""Realization in frame {i}""] = realization_dialogue
+            info[f""Consequences in frame {i}""] = consequence_description
+
+    # Determine if the trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_82|What the Hell, Hero?|"Is the trope ""What the Hell, Hero?"", which means ""When characters In-Universe call out one of the heroes for doing something clearly unheroic, if not outright heinous."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: What the Hell, Hero?
+    # Definition: When characters In-Universe call out one of the heroes for doing something clearly unheroic, if not outright heinous.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify instances where a hero character performs questionable actions.
+    # 2. Character Analysis: Look for reactions from other characters that indicate disapproval or shock at the hero's behavior.
+    # 3. Event Analysis: Identify specific events or actions that trigger the ""What the Hell, Hero?"" response.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for hero characters and their actions
+        hero_patches = frame.find(""hero"")
+        for hero_patch in hero_patches:
+            # Analyze the hero's actions and traits
+            hero_actions = hero_patch.simple_query(""What actions is the hero performing?"")
+            # Check for reactions from other characters
+            reactions = frame.simple_query(""Are other characters reacting negatively to the hero's actions?"", to_yesno=True)
+            if ""yes"" in reactions.lower():
+                reaction_description = frame.simple_query(""Describe the reactions of other characters."")
+                info[f""Reactions to hero in frame {i}""] = reaction_description
+                info[f""Hero actions in frame {i}""] = hero_actions
+
+    # Determine if the ""What the Hell, Hero?"" trope is relevant based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_83|Hope Spot|"Is the trope ""Hope Spot"", which means ""The Protagonist is about to face utter defeat. Suddenly, he finds a glimmer of hope what have you only to be crushed cruelly by the bad guys 
+returning in force."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Hope Spot
+    # Definition: The protagonist is about to face utter defeat. Suddenly, he finds a glimmer of hope only to be crushed cruelly by the bad guys returning in force.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify moments where the protagonist faces defeat and then encounters a glimmer of hope.
+    # 2. Emotional Analysis: Look for visual cues and character reactions that indicate a shift from despair to hope.
+    # 3. Narrative Evaluation: Determine if the hope spot is followed by a crushing defeat, emphasizing the trope's essence.
+    # 4. Answer Selection: Use the collected information to decide if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""protagonist"") and frame.exists(""defeat""):
+            hope_spot_query = frame.simple_query(""Is there a moment of hope after defeat?"", to_yesno=True)
+            if ""yes"" in hope_spot_query.lower():
+                hope_description = frame.simple_query(""Describe the glimmer of hope moment."")
+                defeat_description = frame.simple_query(""Describe the crushing defeat that follows."")
+                info[f""Hope Spot in frame {i}""] = hope_description
+                info[f""Defeat after Hope Spot in frame {i}""] = defeat_description
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_84|Heel Face Turn|"Is the trope ""Heel Face Turn"", which means ""When a bad guy turns good."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Heel Face Turn
+    # Definition: When a bad guy turns good.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame to identify the character or characters associated with the trope.
+    # 2. Character Analysis: Look for visual cues or character development that indicate a change from villainous to virtuous behavior.
+    # 3. Narrative Context: Consider the storyline and interactions between characters to determine if a Heel Face Turn has occurred.
+    # 4. Answer Selection: Use the collected information to decide if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    # Iterate through frames to detect the presence of a Heel Face Turn
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Identify characters associated with the trope
+        characters = frame.find(""character"")
+        
+        for character in characters:
+            # Analyze character traits and behavior
+            traits = character.simple_query(""Describe the character's behavior and traits."")
+            change_query = character.simple_query(""Is there a change in behavior indicating a Heel Face Turn?"", to_yesno=True)
+            
+            if ""yes"" in change_query.lower():
+                info[f""Heel Face Turn detected in {i}th frame for {character}""] = traits
+
+    # Determine if the Heel Face Turn trope is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_85|Took a Level in Badass|"Is the trope ""Took a Level in Badass"", which means ""A charcter who is transformed into someone stronger and tougher that the viewer almost can't recognize him."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Took a Level in Badass
+    # Definition: A character who is transformed into someone stronger and tougher that the viewer almost can't recognize him.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the frames to identify the character's transformation into a stronger and tougher persona.
+    # 2. Transformation Analysis: Look for visual cues such as changes in appearance, demeanor, or actions that signify the character's evolution.
+    # 3. Character Recognition: Determine if the character's newfound strength and toughness are evident and impactful enough to align with the trope.
+    # 4. Answer Selection: Use the select_answer API to choose the most suitable answer based on the character's development.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Check for visual cues indicating a transformation
+        transformation_query = frame.simple_query(""Is there a transformation indicating increased strength and toughness?"", to_yesno=True)
+        if ""yes"" in transformation_query.lower():
+            transformation_description = frame.simple_query(""Describe the transformation in detail."")
+            info[f""Transformation in frame {i}""] = transformation_description
+
+    # Analyze the collected information to determine if the trope applies
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_86|Chekhov's Gun|"Is the trope ""Chekhov's Gun"", which means ""An insignificant object that later turns out to be important."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Initialize an empty dictionary to store information collected during analysis
+    info = {}
+
+    # Iterate through each frame in the video segment
+    video_segment = VideoSegment(video, annotation)
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect any insignificant objects or elements that might become important later
+        insignificant_objects = frame.find(""insignificant_object"")
+        
+        # Analyze the presence and significance of these objects in subsequent frames
+        for obj in insignificant_objects:
+            if obj.is_significant_later():
+                info[f""Insignificant object in frame {i}""] = obj
+
+    # Determine if the ""Chekhov's Gun"" trope is relevant based on the analysis
+    answer = ""yes"" if len(info) > 0 else ""no""
+    reason = ""The presence of insignificant objects that later become important suggests the Chekhov's Gun trope.""
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_87|Foreshadowing|"Is the trope ""Foreshadowing"", which means ""A clue or allusion embedded in the narrative that predicts some later event or revelation."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Foreshadowing
+    # Definition: A clue or allusion embedded in the narrative that predicts some later event or revelation.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for potential clues or allusions that hint at future events or revelations.
+    # 2. Contextual Analysis: Look for elements in the scenes that may serve as foreshadowing, such as visual cues, character interactions, or dialogues.
+    # 3. Foreshadowing Detection: Identify instances where the narrative subtly hints at future developments without explicitly revealing them.
+    # 4. Answer Selection: Use the select_answer API to determine if the foreshadowing trope is relevant to the movie based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    # Create an info dictionary to hold detected elements that might indicate foreshadowing
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Analyze each frame for potential foreshadowing elements
+        foreshadowing_analysis = frame.simple_query(""Is there any foreshadowing in this scene?"", to_yesno=True)
+        if ""yes"" in foreshadowing_analysis.lower():
+            foreshadowing_description = frame.simple_query(""Describe the foreshadowing element in this scene."")
+            info[f""Foreshadowing in frame {i}""] = foreshadowing_description
+
+    # Determine if the foreshadowing trope is relevant to the movie based on the collected information
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_88|Chekhov's Skill|"Is the trope ""Chekhov's Skill"", which means ""Training in any kind of skill, ability, or knowledge that will likely later come in handy."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Chekhov's Skill
+    # Definition: Training in any kind of skill, ability, or knowledge that will likely later come in handy.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify instances where a character is acquiring or demonstrating a skill or knowledge.
+    # 2. Skill Relevance: Determine if the acquired skill or knowledge plays a significant role later in the plot, contributing to a key event or resolution.
+    # 3. Answer Selection: Use the select_answer API to decide if the trope ""Chekhov's Skill"" is relevant based on the observed skills and their impact on the narrative.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting skill acquisition or demonstration
+        skill_query = frame.simple_query(""Is a character acquiring or demonstrating a skill?"", to_yesno=True)
+        
+        if ""yes"" in skill_query.lower():
+            skill_description = frame.simple_query(""Describe the skill being acquired or demonstrated."")
+            info[f""Skill in frame {i}""] = skill_description
+    
+    # Analyze the relevance of the observed skills in the context of the plot
+    relevant_skills = [skill for skill in info.values() if ""fighting"" in skill.lower() or ""hacking"" in skill.lower()]
+    
+    if relevant_skills:
+        answer = ""yes""
+        reason = ""The acquired skills such as fighting or hacking play a crucial role in the plot development.""
+    else:
+        answer = ""no""
+        reason = ""While skills are present, they do not significantly impact the narrative.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_89|Chekhov's Gunman|"Is the trope ""Chekhov's Gunman"", which means ""Any character who is innocuously and unimportantly introduced to the viewer, but who later proves to be important by the end of the episode."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Chekhov's Gunman
+    # Definition: Any character who is innocuously and unimportantly introduced to the viewer, but who later proves to be important by the end of the episode.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify characters introduced early on.
+    # 2. Character Analysis: Look for characters who initially seem unimportant but may have hidden significance.
+    # 3. Plot Development: Identify any character arcs or events that suggest a character's importance later in the video.
+    # 4. Answer Selection: Use the collected information to determine if the ""Chekhov's Gunman"" trope is relevant to the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    potential_gunmen = set()
+
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        characters = frame.find(""person"")
+        for character in characters:
+            if character not in potential_gunmen:
+                # Check if the character is introduced early but seems unimportant
+                if i < video_segment.num_frames // 2:  # Assuming early introduction
+                    potential_gunmen.add(character)
+                else:
+                    # Check for any development or importance of the character later
+                    if character.exists(""important_sign""):
+                        potential_gunmen.add(character)
+
+    if len(potential_gunmen) > 0:
+        info[""Potential Gunmen""] = [character.simple_query(""Character details"") for character in potential_gunmen]
+
+    # Determine if the ""Chekhov's Gunman"" trope is relevant based on the identified characters
+    answer = ""yes"" if len(potential_gunmen) > 0 else ""no""
+    reason = ""Characters introduced early but gain importance later were identified.""
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_90|Red Herring|"Is the trope ""Red Herring"", which means ""A clue that leads in the wrong direction."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Red Herring
+    # Definition: A clue that leads in the wrong direction.
+    # Thought Process:
+    # 1. Frame Selection: Analyze each frame for potential red herring clues that mislead the audience.
+    # 2. Clue Detection: Look for elements that are intentionally misleading or divert attention from the main plot.
+    # 3. Answer Selection: Use the select_answer API to determine if the ""Red Herring"" trope is relevant to the video.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detecting red herring clues in the frame
+        has_red_herring = frame.simple_query(""Are there any misleading clues in this scene?"", to_yesno=True)
+        if ""yes"" in has_red_herring.lower():
+            misleading_clue = frame.simple_query(""What misleading clue is present in the scene?"")
+            info[f""Red Herring clue in frame {i}""] = misleading_clue
+
+    # Determine if the ""Red Herring"" trope is relevant based on the collected clues
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_91|Ironic Echo|"Is the trope ""Ironic Echo"", which means ""When a character repeats a comment they received in a different situation, giving it a flipped or surprising new meaning."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Ironic Echo
+    # Definition: When a character repeats a comment they received in a different situation, giving it a flipped or surprising new meaning.
+    # Thought Process:
+    # 1. Frame Selection: Analyze the video frames to identify instances where a character repeats a comment.
+    # 2. Contextual Analysis: Look for situations where the repeated comment takes on a new or ironic meaning based on the context.
+    # 3. Echo Detection: Detect the repeated comments and analyze how they contribute to the trope.
+    # 4. Answer Selection: Use the select_answer API to determine if the ""Ironic Echo"" trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+
+    # Logic to detect the ""Ironic Echo"" trope in the video segment
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Implement logic to detect instances of ironic echoes in the dialogue or actions of characters
+        # You can use frame.simple_query or other methods to analyze the content of the frames
+
+    # Use the collected information to determine if the ""Ironic Echo"" trope is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_92|Hoist by His Own Petard|"Is the trope ""Hoist by His Own Petard"", which means ""The villain's own weapon or malicious plan is the cause of their downfall and/or death."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Hoist by His Own Petard
+    # Definition: The villain's own weapon or malicious plan is the cause of their downfall and/or death.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify instances where the villain's actions or plans backfire.
+    # 2. Villain's Actions: Look for scenes where the villain's weapon or plan leads to negative consequences for them.
+    # 3. Downfall Analysis: Identify the specific events that showcase the villain's downfall due to their own actions.
+    # 4. Answer Selection: Use the collected information to determine if the trope is relevant to the movie.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""villain""):
+            villain_actions = frame.simple_query(""Describe the villain's actions or plans."")
+            if ""weapon"" in villain_actions or ""malicious plan"" in villain_actions:
+                downfall_event = frame.simple_query(""Describe the event leading to the villain's downfall."")
+                info[f""Villain's actions in frame {i}""] = villain_actions
+                info[f""Downfall event in frame {i}""] = downfall_event
+
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_93|Meaningful Echo|"Is the trope ""Meaningful Echo"", which means ""It occurs when characters, in their usual way, say things to one another, and repeat it later on to give extra meaning."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Meaningful Echo
+    # Definition: A narrative device where characters repeat a phrase or action later in the story to give it extra significance or meaning.
+    # Thought Process:
+    # 1. Frame Selection: Identify instances where characters interact and exchange dialogue or actions that could potentially be echoed later in the story.
+    # 2. Echo Detection: Look for repeated phrases, gestures, or events that occur at different points in the narrative, indicating a meaningful echo.
+    # 3. Contextual Analysis: Analyze the significance of the echoed elements in relation to character development or plot progression.
+    # 4. Answer Selection: Use the select_answer API to determine if the trope of Meaningful Echo is relevant to the movie based on the collected information.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    # Iterate through frames to detect instances of meaningful echoes
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        # Detect dialogues or actions that could potentially be echoed later
+        dialogue = frame.simple_query(""What significant dialogues or actions are present in this scene?"")
+        if dialogue:
+            # Check if the same dialogue or action is repeated later in the story
+            repeated_dialogue = frame.simple_query(""Is this dialogue or action repeated later for extra meaning?"", to_yesno=True)
+            if ""yes"" in repeated_dialogue.lower():
+                info[f""Meaningful Echo detected in frame {i}""] = dialogue
+
+    # Determine if the trope of Meaningful Echo is relevant to the movie
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_94|Freudian Excuse|"Is the trope ""Freudian Excuse"", which means ""The villain had an abusive and particularly violent childhood (such as Abusive Parents, being bullied by peers, etc.), making them insane and warping their perception on the universe"", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query):
+    # Trope: Freudian Excuse
+    # Definition: A trope where the villain's actions are explained or excused by a traumatic or abusive past, often involving parents or childhood experiences.
+    # Thought Process:
+    # 1. Frame Selection: Analyze frames to identify the villain character and any hints of their past or trauma.
+    # 2. Character Analysis: Look for visual cues or narrative elements that suggest a troubled past for the villain.
+    # 3. Trauma Identification: Search for scenes or dialogues that reveal the villain's backstory and potential traumatic experiences.
+    # 4. Answer Selection: Use the collected information to determine if the Freudian Excuse trope is relevant to the movie.
+    
+    video_segment = VideoSegment(video, annotation)
+    info = {}
+    
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        if frame.exists(""villain""):
+            backstory_query = frame.simple_query(""Is there any hint of the villain's past trauma?"", to_yesno=True)
+            if ""yes"" in backstory_query.lower():
+                backstory_description = frame.simple_query(""Describe the villain's traumatic past."")
+                info[f""Villain's backstory in frame {i}""] = backstory_description
+    
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION

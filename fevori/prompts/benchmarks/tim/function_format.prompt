@@ -1,0 +1,9 @@
+def execute_command(video, annotation, possible_answers, query)->[str, dict]
+    # Trope: FILL
+    # Definition: FILL
+    # Thought: FILL
+    # 1. FILL: FILL 
+    # ...
+    # n. FILL: FILL
+    function logic implementation
+    return answer, reason, info

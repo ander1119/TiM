@@ -1,0 +1,111 @@
+answer|groundtruth|id|trope|query|img_path|possible_answers|code|info|reason|compilation_error|runtime_error
+NO EXECUTION|yes|tt0120586_0|Big Bad|"Is the trope ""Big Bad"", which means ""The character who is the direct cause of all of the bad happenings in a story."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]:
+    # Trope: Big Bad
+    # Definition: The character who is the direct cause of all of the bad happenings in a story.
+    # Thought Process:
+    # 1. Character Identification: Identify characters and track their actions across frames.
+    # 2. Event Linking: Determine which negative events are directly caused by the actions of a character.
+    # 3. Consistency Check: Check for consistency in the character’s negative influence over the story arc.
+    video_segment = VideoSegment(video, annotation)
+    # Initialize a dictionary to store information collected during analysis
+    info = {
+        ""happened bad events"": {},
+        ""character infos"": {}
+    }
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        for person in frame.find(""person""):
+            # identify the person in the frame
+            person_id = video_segment.face_identify(person)
+            if person_id is None:
+                # in case face_identify fails
+                for pid, character_infos in info[""character infos""].items():
+                    description = character_infos[""description""]
+                    is_same = person.simple_query(f""Is this person the same as {description}?"", to_yesno=True)
+                    if ""yes"" in is_same.lower():
+                        person_id = pid
+                        break
+            if person_id is None:
+                continue
+            # query the character""s description and add into character_description
+            if person_id not in info[""character infos""]:
+                info[""character infos""][person_id] = {
+                    ""description"": person.simple_query(""Please describe his/her appearance in 10 words""),
+                    ""actions"": {}
+                }
+            # query the character""s action in the frame
+            action = person.simple_query(""Please describe his/her action in the scene"")
+            info[""character infos""][person_id][""actions""][f""{i} frame""] = action
+        # query the negative events happening in the scene
+        any_negative_event = frame.simple_query(""Is there any negative event happening in the scene?"", to_yesno=True)
+        if ""yes"" in any_negative_event.lower():
+            event = frame.simple_query(""What's negative event is happening in the scene"")
+            info[""happened bad events""][f""{i} frame""] = {
+                ""event"": event,
+                ""potential cause"": []
+            }
+            for pid, character_infos in info[""character infos""].items():
+                # check if the character is a potential cause of the negative event
+                character_description = character_infos[""description""]
+                for prev_i in range(i, max(i-5, 0), -1):
+                    prev_action = character_infos[""actions""].get(f""{prev_i} frame"", None)
+                    if prev_action is not None:
+                        is_person_potential = frame.simple_query(f""Is person with '{character_description}' a potential cause of '{event}'?"", to_yesno=True)
+                        is_action_potential = frame.simple_query(f""Is action '{prev_action}' a potential cause of '{event}'?"", to_yesno=True)
+                        if ""yes"" in is_person_potential.lower() or ""yes"" in is_action_potential:
+                            info[""happened bad events""][f""{i} frame""][""potential cause""].append(pid)
+                        break
+    # After collecting information, use it to determine the presence of the trope
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION
+NO EXECUTION|yes|tt0120586_3|Smug Snake|"Is the trope ""Smug Snake"", which means ""A type of character (usually a villain) who tends to treat friends and enemies alike with equal disdain."", relevant to the movie?"|/project/mira/dataset/MovieNet/videos/tt0120586.mp4|['yes', 'no']|"```python
+def execute_command(video, annotation, possible_answers, query)->[str, str, dict]
+    # Trope: Smug Snake
+    # Definition: A type of character (usually a villain) who tends to treat friends and enemies alike with equal disdain, and whose overconfidence usually leads to their downfall.
+    # Thought Process:
+    # 1. Analyze character interactions in each frame for signs of disdain or smugness.
+    # 2. Collect evidence of such behavior impacting their interactions negatively.
+    # 3. Check for consistency of these traits across different scenes.
+
+    video_segment = VideoSegment(video, annotation)
+    info = {
+        ""character infos"": {}
+    }
+    for i, frame in enumerate(video_segment.frame_iterator()):
+        dialogue = "","".join(frame.get_subtitles())
+        has_disdainful_talk = frame.llm_query(f""Does the dialogue '{dialogue}' suggest the character in frame being disdainful or smug to others?"", to_yesno=True)
+        for person in frame.find(""person""):
+            person_id = video_segment.face_identify(person)
+            if person_id is None:
+                for pid, character_infos in info[""character infos""].items():
+                    description = character_infos[""description""]
+                    is_same = person.simple_query(f""Is this person the same as {description}?"", to_yesno=True)
+                    if ""yes"" in is_same.lower():
+                        person_id = pid
+                        break
+            if person_id is None:
+                continue
+            # query the character's description and add into character_description
+            if person_id not in info[""character infos""]:
+                info[""character infos""][person_id] = {
+                    ""description"": person.simple_query(""Please describe his/her appearance in 10 words""),
+                    ""no distain action count"": 0,
+                    ""distainful actions"": []
+                }
+            description = info[""character infos""][person_id][""description""]
+            has_distainful_behavior = frame.simple_query(f""Does person in description '{description}' behave distainful or smug to others"", to_yesno=True)
+            if ""yes"" in has_distainful_behavior.lower():
+                distainful_behavior = frame.simple_query(f""Why does person in description '{description}' behave distainful or smug to others"")
+                info[""character infos""][person_id][""distainful actions""].append(distainful_behavior)
+            else:
+                info[""character infos""][person_id][""no distain action count""] += 1
+            if ""yes"" in has_disdainful_talk.lower():
+                distain_talk = frame.llm_query(f""Why the dialogue '{dialogue}' suggest the character in frame being disdainful or smug to others?"")
+                info[""character infos""][person_id][""distainful actions""].append(distain_talk)
+            else:
+                info[""character infos""][person_id][""no distain action count""] += 1
+    # Use the collected information to answer the query
+    answer, reason = video_segment.select_answer(info, query, possible_answers)
+    return answer, reason, info
+```"|{}|NO EXECUTION|NO EXECUTION|NO EXECUTION

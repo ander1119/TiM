@@ -57,7 +57,7 @@ json file format:
 ```
 
 ## Usage
-We made some modification on SOTA method and enable them accepting format of TiM dataset, the modification is detailed documented in each README. Once the data preparation is ready, you can reproduce the result by following the instruction step by step.
+We made some modification on SOTA method and enable them accepting format of TiM dataset, the modification is detailed documented in [fevori](fevori/README.md). Once the data preparation is ready, you can reproduce the result by following the instruction step by step.
 
 ## SOTA Method on Different Settings
 ### Fullset (Single Modality)
